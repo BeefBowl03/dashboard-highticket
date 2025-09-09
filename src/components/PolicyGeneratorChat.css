@@ -300,6 +300,105 @@
   transform: translateX(4px);
 }
 
+/* Policy Display Styles */
+.policy-display-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #333333;
+}
+
+.policy-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.policy-section {
+  background: #1a1a1a;
+  border: 1px solid #333333;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.policy-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #222222;
+  border-bottom: 1px solid #333333;
+}
+
+.policy-section-header h3 {
+  margin: 0;
+  color: #aa813c;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.copy-button {
+  background: linear-gradient(135deg, #aa813c 0%, #d4af37 100%);
+  color: #000000;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.copy-button:hover {
+  background: linear-gradient(135deg, #d4af37 0%, #aa813c 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(170, 129, 60, 0.3);
+}
+
+.policy-code-container {
+  max-height: 400px;
+  overflow-y: auto;
+  background: #0d1117;
+}
+
+.policy-code {
+  margin: 0;
+  padding: 20px;
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #e6edf3;
+  background: transparent;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.policy-code code {
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+}
+
+/* Scrollbar styling for policy code */
+.policy-code-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.policy-code-container::-webkit-scrollbar-track {
+  background: #161b22;
+}
+
+.policy-code-container::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+
+.policy-code-container::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
+
 .input-container {
   display: flex;
   gap: 12px;
