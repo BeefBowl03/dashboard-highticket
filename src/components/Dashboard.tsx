@@ -23,6 +23,7 @@ interface ToolCard {
 }
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
 
   const tools: ToolCard[] = [
     {
@@ -93,6 +94,13 @@ const Dashboard: React.FC = () => {
     }
   ];
 
+  const handleToolClick = (toolId: string) => {
+    if (toolId === 'store-policy-generator') {
+      navigate('/policy-generator');
+    }
+    // Add handlers for other tools here
+  };
+
   return (
     <div className="dashboard-container">
       {/* Main Content */}
@@ -130,7 +138,10 @@ const Dashboard: React.FC = () => {
                   <p className="tool-description">{tool.description}</p>
                 </div>
                 
-                <button className={`tool-button ${tool.buttonType}`}>
+                <button 
+                  className={`tool-button ${tool.buttonType}`}
+                  onClick={() => handleToolClick(tool.id)}
+                >
                   {tool.buttonText}
                 </button>
               </div>

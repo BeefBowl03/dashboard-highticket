@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
+import PolicyGeneratorChat from './components/PolicyGeneratorChat';
 import './App.css';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/policy-generator" element={<PolicyGeneratorChat />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </div>
