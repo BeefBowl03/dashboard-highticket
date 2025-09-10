@@ -9,14 +9,15 @@
       }
     },
     {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
+      "src": "server-working.js",
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["competitor-finder-working.js", "domain-databases-working.js", "namecom-api-working.js", "competitors-working.json"] }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "dest": "/server-working.js"
     },
     {
       "src": "/(.*)",

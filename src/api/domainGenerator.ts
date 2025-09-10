@@ -44,7 +44,7 @@ export async function generateDomainsForNiche(niche: string): Promise<DomainGene
   try {
     console.log(`🚀 Starting domain generation for niche: "${niche}"`);
     
-    const response = await fetch(`${API_BASE_URL}/api/domains`, {
+    const response = await fetch(`${API_BASE_URL}/api/generate-domains`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
