@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Mail } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import EmailForm from './EmailForm';
 import EmailTemplate from './EmailTemplate';
 import LoadingSpinner from './LoadingSpinner';

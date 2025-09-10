@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { EmailTemplate as EmailTemplateType, EmailFormData, SUBJECT_LINE_OPTIONS } from '../types/email';
-import { Copy, Check, Mail, MessageSquare, Eye, Download, RefreshCw, Edit3, ChevronDown, ChevronRight, Lightbulb } from 'lucide-react';
+import { Copy, Check, Mail, MessageSquare, Eye, Download, ChevronDown, ChevronRight, Lightbulb } from 'lucide-react';
 
 interface EmailTemplateProps {
   template: EmailTemplateType;
