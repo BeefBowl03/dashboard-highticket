@@ -4,6 +4,7 @@ import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
 import PolicyGeneratorPage from './components/PolicyGeneratorPage';
 import DomainGeneratorPage from './components/DomainGeneratorPage';
+import AIColdEmailPage from './components/AIColdEmailPage';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/policy-generator" element={<PolicyGeneratorPage />} />
           <Route path="/domain-generator" element={<DomainGeneratorPage />} />
+          <Route path="/ai-cold-email" element={<AIColdEmailPage />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </div>

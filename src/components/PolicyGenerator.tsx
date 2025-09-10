@@ -136,7 +136,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
           {currentStep === 'questions' && (
             <span className="text-sm sm:text-lg text-gray-400">
               {answeredQuestions.size} of {questions.length} questions answered
-            </span>
+          </span>
           )}
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2 sm:h-3 shadow-inner">
@@ -174,7 +174,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
             <div className="inline-flex items-center px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-yellow-500 to-yellow-400 text-black shadow-lg">
               {getCurrentGroup()}
             </div>
-          </div>
+      </div>
 
           <QuestionForm
             key={questions[currentQuestionIndex]?.id} // Force re-render when question changes
@@ -192,7 +192,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
             onFinishEditing={handleFinishEditing}
             showSkipButton={![1, 2, 3, 4, 5, 6, 7, 27].includes(questions[currentQuestionIndex]?.id || 0)}
           />
-        </div>
+      </div>
       )}
 
       {currentStep === 'review' && (

@@ -1534,8 +1534,8 @@ export const returnRefundPolicyTemplate: PolicyTemplate = {
 };
 
 export const privacyPolicyTemplate: PolicyTemplate = {
-  id: 'privacy',
-  name: 'Privacy Policy',
+    id: 'privacy',
+    name: 'Privacy Policy',
   description: 'Comprehensive privacy policy with data collection, usage, and protection information',
   htmlTemplate: `<style>
 .sp--fullbleed {
@@ -1839,8 +1839,8 @@ export const privacyPolicyTemplate: PolicyTemplate = {
 };
 
 export const termsOfServiceTemplate: PolicyTemplate = {
-  id: 'terms',
-  name: 'Terms of Service',
+    id: 'terms',
+    name: 'Terms of Service',
   description: 'Comprehensive terms of service with user rights, responsibilities, and legal obligations',
   htmlTemplate: `<style>
   /* ---------- Page-specific full-bleed wrapper ---------- */

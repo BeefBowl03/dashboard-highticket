@@ -7,7 +7,8 @@ import {
   Palette, 
   Image,
   FileText,
-  Globe
+  Globe,
+  Mail
 } from 'lucide-react';
 import './Dashboard.css';
 
@@ -28,14 +29,25 @@ const Dashboard: React.FC = () => {
 
   const tools: ToolCard[] = [
     {
-      id: 'niche-selector',
-      title: 'Niche Selector',
-      description: 'Welcome! Would you like a quick walkthrough to set up your account...',
+      id: 'ai-humanizer',
+      title: 'AI Humanizer',
+      description: 'Transform AI-generated content into natural, human-like text that passes all detection tools...',
       icon: <HandHeart size={32} />,
       status: 'Ready to Use',
       lastUsed: 'Never used',
       conversations: 0,
       buttonText: 'Start Chat',
+      buttonType: 'primary'
+    },
+    {
+      id: 'ai-cold-email',
+      title: 'AI Cold Email Generator',
+      description: 'Generate professional cold emails for supplier partnerships and B2B outreach...',
+      icon: <Mail size={32} />,
+      status: 'Ready to Use',
+      lastUsed: 'Never used',
+      conversations: 0,
+      buttonText: 'Generate Emails',
       buttonType: 'primary'
     },
     {
@@ -94,8 +106,8 @@ const Dashboard: React.FC = () => {
       buttonType: 'primary'
     },
     {
-      id: 'brand-domain-search',
-      title: 'Brand and Domain Search',
+      id: 'domain-generator',
+      title: 'Domain Generator',
       description: 'Generate premium domain names and analyze competitor branding using AI.',
       icon: <Globe size={32} />,
       status: 'Ready to Use',
@@ -109,8 +121,13 @@ const Dashboard: React.FC = () => {
   const handleToolClick = (toolId: string) => {
     if (toolId === 'store-policy-generator') {
       navigate('/policy-generator');
-    } else if (toolId === 'brand-domain-search') {
+    } else if (toolId === 'domain-generator') {
       navigate('/domain-generator');
+    } else if (toolId === 'ai-cold-email') {
+      navigate('/ai-cold-email');
+    } else if (toolId === 'ai-humanizer') {
+      // TODO: Add AI Humanizer route
+      console.log('AI Humanizer clicked');
     }
     // Add handlers for other tools here
   };
