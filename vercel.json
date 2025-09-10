@@ -9,15 +9,22 @@
       }
     },
     {
-      "src": "server-working.js",
-      "use": "@vercel/node",
-      "config": { "includeFiles": ["competitor-finder-working.js", "domain-databases-working.js", "namecom-api-working.js", "competitors-working.json"] }
+      "src": "api/generate-domains-simple.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/debug.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/server-working.js"
+      "src": "/api/debug",
+      "dest": "/api/debug.js"
+    },
+    {
+      "src": "/api/generate-domains",
+      "dest": "/api/generate-domains-simple.js"
     },
     {
       "src": "/(.*)",
