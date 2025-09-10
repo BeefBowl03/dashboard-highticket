@@ -7,26 +7,9 @@
       "config": {
         "distDir": "build"
       }
-    },
-    {
-      "src": "server.js",
-      "use": "@vercel/node",
-      "config": { 
-        "includeFiles": [
-          "competitor-finder.js", 
-          "domain-databases.js", 
-          "namecom-api.js",
-          "competitors.json",
-          "domains.db"
-        ] 
-      }
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/server.js"
-    },
     {
       "src": "/(.*)",
       "dest": "/$1"
