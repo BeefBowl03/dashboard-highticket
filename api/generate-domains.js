@@ -1,4 +1,4 @@
-// Real domain generator with OpenAI and Name.com integration
+// Real domain generator with OpenAI and Name.com integration - Updated
 const OpenAI = require('openai');
 const axios = require('axios');
 
