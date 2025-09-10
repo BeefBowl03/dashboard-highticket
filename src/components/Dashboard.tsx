@@ -1,10 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom'; // Will be used when implementing navigation
 import { 
   HandHeart, 
   Lightbulb, 
   Rocket, 
-  Monitor, 
   Palette, 
   Image
 } from 'lucide-react';
@@ -23,7 +22,7 @@ interface ToolCard {
 }
 
 const Dashboard: React.FC = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate(); // Will be used when implementing navigation
 
   const tools: ToolCard[] = [
     {
