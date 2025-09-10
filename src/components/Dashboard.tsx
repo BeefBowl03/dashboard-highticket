@@ -2,10 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   HandHeart, 
-  Lightbulb, 
-  Rocket, 
-  Palette, 
-  Image,
   FileText,
   Globe,
   Mail,
@@ -60,50 +56,6 @@ const Dashboard: React.FC = () => {
       lastUsed: 'Never used',
       conversations: 0,
       buttonText: 'Generate Logo',
-      buttonType: 'primary'
-    },
-    {
-      id: 'product-ideation',
-      title: 'Product Ideation',
-      description: "Let's explore smart product ideas and build a strategy to successfully l...",
-      icon: <Lightbulb size={32} />,
-      status: 'Ready to Use',
-      lastUsed: 'Never used',
-      conversations: 0,
-      buttonText: 'Start Chat',
-      buttonType: 'primary'
-    },
-    {
-      id: 'brand-domain-search',
-      title: 'Brand and Domain Search',
-      description: 'Need help picking a strong brand name and domain that sets your onl...',
-      icon: <Rocket size={32} />,
-      status: 'Ready to Use',
-      lastUsed: 'Never used',
-      conversations: 0,
-      buttonText: 'Start Chat',
-      buttonType: 'primary'
-    },
-    {
-      id: 'logo-generator',
-      title: 'Logo Generator',
-      description: 'Want a custom logo that reflects your brand identity? Let\'s design so...',
-      icon: <Palette size={32} />,
-      status: 'Ready to Use',
-      lastUsed: 'Never used',
-      conversations: 0,
-      buttonText: 'Start Chat',
-      buttonType: 'primary'
-    },
-    {
-      id: 'website-image-creator',
-      title: 'Website Image Creator',
-      description: 'Need stunning website images for your store design? I\'ll help create vis...',
-      icon: <Image size={32} />,
-      status: 'Ready to Use',
-      lastUsed: 'Never used',
-      conversations: 0,
-      buttonText: 'Start Chat',
       buttonType: 'primary'
     },
     {
