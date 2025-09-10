@@ -9,15 +9,14 @@
       }
     },
     {
-      "src": "server-domain-backend.js",
-      "use": "@vercel/node",
-      "config": { "includeFiles": ["competitor-finder-backend.js", "domain-databases-backend.js", "namecom-api-backend.js", "competitors-backend.json"] }
+      "src": "api/generate-domains.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/server-domain-backend.js"
+      "src": "/api/generate-domains",
+      "dest": "/api/generate-domains.js"
     },
     {
       "src": "/(.*)",
