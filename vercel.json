@@ -7,9 +7,18 @@
       "config": {
         "distDir": "build"
       }
+    },
+    {
+      "src": "server-working.js",
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["competitor-finder-working.js", "domain-databases-working.js", "namecom-api-working.js", "competitors-working.json"] }
     }
   ],
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server-working.js"
+    },
     {
       "src": "/(.*)",
       "dest": "/$1"
