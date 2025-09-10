@@ -1,11 +1,13 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom'; // Will be used when implementing navigation
+import { useNavigate } from 'react-router-dom';
 import { 
   HandHeart, 
   Lightbulb, 
   Rocket, 
   Palette, 
-  Image
+  Image,
+  FileText,
+  Globe
 } from 'lucide-react';
 import './Dashboard.css';
 
@@ -22,7 +24,7 @@ interface ToolCard {
 }
 
 const Dashboard: React.FC = () => {
-  // const navigate = useNavigate(); // Will be used when implementing navigation
+  const navigate = useNavigate();
 
   const tools: ToolCard[] = [
     {
@@ -79,10 +81,37 @@ const Dashboard: React.FC = () => {
       conversations: 0,
       buttonText: 'Start Chat',
       buttonType: 'primary'
+    },
+    {
+      id: 'store-policy-generator',
+      title: 'Store Policy Generator',
+      description: 'Generate legal policies for your store including Privacy Policy, Terms of Service, and more.',
+      icon: <FileText size={32} />,
+      status: 'Ready to Use',
+      lastUsed: 'Never used',
+      conversations: 0,
+      buttonText: 'Generate Policies',
+      buttonType: 'primary'
+    },
+    {
+      id: 'brand-domain-search',
+      title: 'Brand and Domain Search',
+      description: 'Generate premium domain names and analyze competitor branding using AI.',
+      icon: <Globe size={32} />,
+      status: 'Ready to Use',
+      lastUsed: 'Never used',
+      conversations: 0,
+      buttonText: 'Start Generating',
+      buttonType: 'primary'
     }
   ];
 
   const handleToolClick = (toolId: string) => {
+    if (toolId === 'store-policy-generator') {
+      navigate('/policy-generator');
+    } else if (toolId === 'brand-domain-search') {
+      navigate('/domain-generator');
+    }
     // Add handlers for other tools here
   };
 
