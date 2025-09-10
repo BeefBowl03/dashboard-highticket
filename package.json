@@ -1,25 +1,13 @@
 {
-  "name": "dashboard-monorepo",
+  "name": "dashboard-unified",
   "version": "1.0.0",
   "description": "Unified Dashboard with Policy Generator and Domain Generator",
   "private": true,
-  "workspaces": [
-    "dashboard-app",
-    "dashboard-backend"
-  ],
   "scripts": {
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:frontend": "cd dashboard-app && npm start",
-    "dev:backend": "cd dashboard-backend && npm run dev",
-    "build": "npm run build:frontend",
-    "build:frontend": "cd dashboard-app && npm run build",
-    "build:backend": "cd dashboard-backend && npm run build",
-    "start": "npm run start:backend",
-    "start:backend": "cd dashboard-backend && npm start",
-    "install:all": "npm install && cd dashboard-app && npm install && cd ../dashboard-backend && npm install"
-  },
-  "devDependencies": {
-    "concurrently": "^7.6.0"
+    "dev": "cd dashboard-app && npm start",
+    "build": "cd dashboard-app && npm run build",
+    "start": "cd dashboard-app && npm start",
+    "install": "cd dashboard-app && npm install"
   },
   "engines": {
     "node": ">=16.0.0"
