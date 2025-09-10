@@ -32,33 +32,34 @@ interface DomainGeneratorResults {
   totalAvailable: number;
 }
 
-const mockResults: DomainGeneratorResults = {
-  competitors: [
-    { domain: 'saunahavenusa.com', name: 'Sauna Haven USA', description: 'High-end saunas' },
-    { domain: 'backyardoasis.net', name: 'Backyard Oasis', description: 'Luxury outdoor living' },
-    { domain: 'firepitparadise.com', name: 'Fire Pit Paradise', description: 'Premium fire pits' },
-    { domain: 'porchperfect.co', name: 'Porch Perfect', description: 'Stylish porch furniture' },
-    { domain: 'grillmasters.store', name: 'Grill Masters Store', description: 'High-quality grills' },
-  ],
-  patterns: {
-    averageLength: '14 characters',
-    lengthRange: '7 - 20 characters',
-    wordCount: '2 words',
-    nicheKeywords: 'bbq, fire, porch, barbecue',
-    structurePatterns: 'single word, two-word combination',
-    brandPositioning: 'Should sound premium and trustworthy for high-ticket customers',
-  },
-  recommendation: { domain: 'EliteBackyard.com', price: '$12.99', available: true, score: 95 },
-  alternatives: [
-    { domain: 'LuxuryOutdoorLiving.com', price: '$14.99', available: true, score: 90 },
-    { domain: 'PremiumPatio.store', price: '$9.99', available: true, score: 88 },
-    { domain: 'GardenSanctuary.co', price: '$11.99', available: true, score: 85 },
-    { domain: 'OutdoorElegance.net', price: '$13.99', available: true, score: 82 },
-    { domain: 'TheBackyardPro.com', price: '$10.99', available: true, score: 80 },
-  ],
-  totalGenerated: 50,
-  totalAvailable: 12,
-};
+// Mock data for development/testing - currently unused
+// const mockResults: DomainGeneratorResults = {
+//   competitors: [
+//     { domain: 'saunahavenusa.com', name: 'Sauna Haven USA', description: 'High-end saunas' },
+//     { domain: 'backyardoasis.net', name: 'Backyard Oasis', description: 'Luxury outdoor living' },
+//     { domain: 'firepitparadise.com', name: 'Fire Pit Paradise', description: 'Premium fire pits' },
+//     { domain: 'porchperfect.co', name: 'Porch Perfect', description: 'Stylish porch furniture' },
+//     { domain: 'grillmasters.store', name: 'Grill Masters Store', description: 'High-quality grills' },
+//   ],
+//   patterns: {
+//     averageLength: '14 characters',
+//     lengthRange: '7 - 20 characters',
+//     wordCount: '2 words',
+//     nicheKeywords: 'bbq, fire, porch, barbecue',
+//     structurePatterns: 'single word, two-word combination',
+//     brandPositioning: 'Should sound premium and trustworthy for high-ticket customers',
+//   },
+//   recommendation: { domain: 'EliteBackyard.com', price: '$12.99', available: true, score: 95 },
+//   alternatives: [
+//     { domain: 'LuxuryOutdoorLiving.com', price: '$14.99', available: true, score: 90 },
+//     { domain: 'PremiumPatio.store', price: '$9.99', available: true, score: 88 },
+//     { domain: 'GardenSanctuary.co', price: '$11.99', available: true, score: 85 },
+//     { domain: 'OutdoorElegance.net', price: '$13.99', available: true, score: 82 },
+//     { domain: 'TheBackyardPro.com', price: '$10.99', available: true, score: 80 },
+//   ],
+//   totalGenerated: 50,
+//   totalAvailable: 12,
+// };
 
 const DomainGenerator: React.FC = () => {
   const [nicheInput, setNicheInput] = useState<string>('');

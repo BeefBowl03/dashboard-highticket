@@ -1,7 +1,7 @@
 import { PolicyTemplate, PolicyData } from '../types';
 
 export const generatePolicyHTML = (data: PolicyData, templateType: string): string => {
-  const { businessName, contactEmail, website, address } = data;
+  const { businessName, contactEmail } = data;
   
   switch (templateType) {
     case 'privacy':
