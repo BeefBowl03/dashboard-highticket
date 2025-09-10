@@ -10,13 +10,7 @@
     },
     {
       "src": "dashboard-backend/server.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "dashboard-backend/**/*",
-          "!dashboard-backend/node_modules/**"
-        ]
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
