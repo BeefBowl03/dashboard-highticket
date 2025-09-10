@@ -7,17 +7,9 @@
       "config": {
         "distDir": "build"
       }
-    },
-    {
-      "src": "dashboard-backend/server.js",
-      "use": "@vercel/node"
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/dashboard-backend/server.js"
-    },
     {
       "src": "/(.*)",
       "dest": "/dashboard-app/$1"
