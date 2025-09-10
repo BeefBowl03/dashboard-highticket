@@ -6,7 +6,7 @@ import { PolicyData } from '../types';
 
 const PolicyGeneratorPage: React.FC = () => {
   const navigate = useNavigate();
-  const [policyData, setPolicyData] = useState<PolicyData | null>(null);
+  const [, setPolicyData] = useState<PolicyData | null>(null);
 
   return (
     <div className="min-h-screen premium-gradient">

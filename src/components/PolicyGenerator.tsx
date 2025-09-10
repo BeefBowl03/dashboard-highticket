@@ -43,7 +43,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
         setFormData(prev => ({ ...prev, contactPageURL: `${baseUrl}/contact` }));
       }
     }
-  }, [formData.shipToCountries, formData.primaryWebsiteDomain]);
+  }, [formData.shipToCountries, formData.primaryWebsiteDomain, formData.contactPageURL, formData.faqPageURL, formData.returnPolicyURL, formData.sellingRegions, formData.termsOfServicePageURL]);
 
   // Scroll to top when step changes
   useEffect(() => {
