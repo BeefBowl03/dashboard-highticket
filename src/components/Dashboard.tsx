@@ -8,7 +8,8 @@ import {
   Image,
   FileText,
   Globe,
-  Mail
+  Mail,
+  Sparkles
 } from 'lucide-react';
 import './Dashboard.css';
 
@@ -48,6 +49,17 @@ const Dashboard: React.FC = () => {
       lastUsed: 'Never used',
       conversations: 0,
       buttonText: 'Generate Emails',
+      buttonType: 'primary'
+    },
+    {
+      id: 'ai-logo-generator',
+      title: 'AI Logo Generator',
+      description: 'Create professional logos powered by AI with transparent backgrounds and modern designs...',
+      icon: <Sparkles size={32} />,
+      status: 'Ready to Use',
+      lastUsed: 'Never used',
+      conversations: 0,
+      buttonText: 'Generate Logo',
       buttonType: 'primary'
     },
     {
@@ -125,6 +137,8 @@ const Dashboard: React.FC = () => {
       navigate('/domain-generator');
     } else if (toolId === 'ai-cold-email') {
       navigate('/ai-cold-email');
+    } else if (toolId === 'ai-logo-generator') {
+      navigate('/ai-logo-generator');
     } else if (toolId === 'ai-humanizer') {
       // TODO: Add AI Humanizer route
       console.log('AI Humanizer clicked');

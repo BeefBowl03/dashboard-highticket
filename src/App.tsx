@@ -5,6 +5,7 @@ import Profile from './components/Profile';
 import PolicyGeneratorPage from './components/PolicyGeneratorPage';
 import DomainGeneratorPage from './components/DomainGeneratorPage';
 import AIColdEmailPage from './components/AIColdEmailPage';
+import AILogoPage from './components/AILogoPage';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/policy-generator" element={<PolicyGeneratorPage />} />
           <Route path="/domain-generator" element={<DomainGeneratorPage />} />
           <Route path="/ai-cold-email" element={<AIColdEmailPage />} />
+          <Route path="/ai-logo-generator" element={<AILogoPage />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </div>
