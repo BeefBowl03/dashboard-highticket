@@ -4,9 +4,9 @@ const cheerio = require('cheerio');
 let sqlite3 = null;
 const cors = require('cors');
 const OpenAI = require('openai');
-const NameComAPI = require('./namecom-api');
-const CompetitorFinder = require('./competitor-finder');
-const DOMAIN_DATABASES = require('./domain-databases');
+const NameComAPI = require('./namecom-api-working');
+const CompetitorFinder = require('./competitor-finder-working');
+const DOMAIN_DATABASES = require('./domain-databases-working');
 // Centralized Niche Classification System
 class NicheClassifier {
   constructor(competitorFinder) {
