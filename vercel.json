@@ -1,18 +1,12 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "dashboard-app/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
-    },
-    {
-      "src": "dashboard-backend/server.js",
-      "use": "@vercel/node"
+  "buildCommand": "cd dashboard-app && npm run build",
+  "outputDirectory": "dashboard-app/build",
+  "functions": {
+    "dashboard-backend/server.js": {
+      "runtime": "nodejs18.x"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
@@ -20,7 +14,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/dashboard-app/$1"
+      "dest": "/dashboard-app/build/$1"
     }
   ]
 }
