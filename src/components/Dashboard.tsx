@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  HandHeart, 
+  Briefcase, 
   FileText,
   Globe,
   Mail,
@@ -26,14 +26,14 @@ const Dashboard: React.FC = () => {
 
   const tools: ToolCard[] = [
     {
-      id: 'ai-humanizer',
-      title: 'AI Humanizer',
-      description: 'Transform AI-generated content into natural, human-like text that passes all detection tools...',
-      icon: <HandHeart size={32} />,
+      id: 'dealer-application',
+      title: 'AI Dealer Application Assistant',
+      description: 'Automatically generate dealer application forms and outreach messages for supplier partnerships...',
+      icon: <Briefcase size={32} />,
       status: 'Ready to Use',
       lastUsed: 'Never used',
       conversations: 0,
-      buttonText: 'Start Chat',
+      buttonText: 'Start Application',
       buttonType: 'primary'
     },
     {
@@ -91,9 +91,8 @@ const Dashboard: React.FC = () => {
       navigate('/ai-cold-email');
     } else if (toolId === 'ai-logo-generator') {
       navigate('/ai-logo-generator');
-    } else if (toolId === 'ai-humanizer') {
-      // TODO: Add AI Humanizer route
-      console.log('AI Humanizer clicked');
+    } else if (toolId === 'dealer-application') {
+      navigate('/dealer-application');
     }
     // Add handlers for other tools here
   };
