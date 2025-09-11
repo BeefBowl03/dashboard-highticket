@@ -72,27 +72,27 @@ const DomainGenerator: React.FC = () => {
   };
 
   return (
-    <div className="px-4 py-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gray-900 py-8">
+      <div className="max-w-7xl mx-auto px-4">
         {/* Search Section */}
-        <div className="mb-8">
-          <div className="bg-transparent rounded-2xl p-8 border border-[#333333]">
-            <h2 className="text-2xl font-bold text-[#c19d44] mb-6 text-center">
+        <div className="mb-12">
+          <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700">
+            <h2 className="text-3xl font-bold text-yellow-500 mb-6 text-center">
               Enter Your Niche
             </h2>
-            <div className="flex gap-4 max-w-2xl mx-auto">
+            <div className="flex gap-4 max-w-3xl mx-auto">
               <input
                 type="text"
                 value={niche}
                 onChange={(e) => setNiche(e.target.value)}
-                placeholder="e.g., backyard, marine, horse riding, smart home..."
-                className="flex-1 p-4 bg-transparent border border-[#333333] rounded-xl text-white placeholder-[#888] focus:outline-none focus:ring-2 focus:ring-[#c19d44] focus:border-transparent"
+                placeholder="backyard"
+                className="flex-1 p-4 bg-gray-700 border border-yellow-500 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-lg"
                 onKeyPress={(e) => e.key === 'Enter' && generateDomains()}
               />
               <button
                 onClick={generateDomains}
                 disabled={loading}
-                className="px-8 py-4 bg-[#c19d44] text-[#080808] font-semibold rounded-xl hover:bg-[#a88a3b] disabled:opacity-50 flex items-center gap-2"
+                className="px-8 py-4 bg-yellow-500 text-black font-semibold rounded-xl hover:bg-yellow-400 disabled:opacity-50 flex items-center gap-2 text-lg"
               >
                 <Search size={20} />
                 Generate Domains
@@ -116,63 +116,63 @@ const DomainGenerator: React.FC = () => {
             {/* Left Column */}
             <div className="space-y-8">
               {/* Popular Stores */}
-              <div className="bg-transparent rounded-2xl p-6 border border-[#333333]">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  <Globe size={20} className="text-[#c19d44]" />
+              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                  <Globe size={24} className="text-yellow-500" />
                   Popular Stores in Your Niche
                 </h3>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-4">
                   {results.competitors.slice(0, 4).map((competitor, index) => (
-                    <div key={index} className="bg-transparent border border-[#333333] rounded-lg p-4">
+                    <div key={index} className="bg-gray-700 border border-gray-600 rounded-lg p-4 hover:border-yellow-500 transition-colors">
                       <a
                         href={competitor.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white hover:text-[#c19d44] font-medium block"
+                        className="text-white hover:text-yellow-500 font-medium block text-lg"
                       >
                         {competitor.name}
                       </a>
-                      <div className="text-[#ffffff80] text-sm mt-1">{competitor.domain}</div>
+                      <div className="text-gray-400 text-sm mt-1">{competitor.domain}</div>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Domain Patterns */}
-              <div className="bg-transparent rounded-2xl p-6 border border-[#333333]">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  <Search size={20} className="text-[#c19d44]" />
+              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                  <Search size={24} className="text-yellow-500" />
                   Domain Patterns Found:
                 </h3>
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center border-b border-[#333333] pb-2">
-                    <span className="text-[#c19d44] font-medium">Average Length:</span>
-                    <span className="text-white">{results.patterns.patterns?.averageLength || 15} characters</span>
+                  <div className="flex justify-between items-center border-b border-gray-600 pb-3">
+                    <span className="text-yellow-500 font-medium">Average Length:</span>
+                    <span className="text-white font-medium">{results.patterns.patterns?.averageLength || 12} characters</span>
                   </div>
-                  <div className="flex justify-between items-center border-b border-[#333333] pb-2">
-                    <span className="text-[#c19d44] font-medium">Length Range:</span>
-                    <span className="text-white">{results.patterns.recommendations?.optimalLength || '15-25 characters'}</span>
+                  <div className="flex justify-between items-center border-b border-gray-600 pb-3">
+                    <span className="text-yellow-500 font-medium">Length Range:</span>
+                    <span className="text-white font-medium">{results.patterns.recommendations?.optimalLength || '12-20 characters'}</span>
                   </div>
-                  <div className="flex justify-between items-center border-b border-[#333333] pb-2">
-                    <span className="text-[#c19d44] font-medium">Most Common Word Count:</span>
-                    <span className="text-white">{results.patterns.patterns?.wordCount || '2-3 words'}</span>
+                  <div className="flex justify-between items-center border-b border-gray-600 pb-3">
+                    <span className="text-yellow-500 font-medium">Most Common Word Count:</span>
+                    <span className="text-white font-medium">{results.patterns.patterns?.wordCount || '2-3 words'}</span>
                   </div>
-                  <div className="border-b border-[#333333] pb-2">
-                    <span className="text-[#c19d44] font-medium">Niche Keywords:</span>
-                    <div className="text-white mt-1">
+                  <div className="border-b border-gray-600 pb-3">
+                    <span className="text-yellow-500 font-medium">Niche Keywords:</span>
+                    <div className="text-white mt-2">
                       {results.patterns.nicheKeywords?.join(', ') || 'backyard, yard, patio, deck, outdoor, garden space, courtyard'}
                     </div>
                   </div>
-                  <div className="border-b border-[#333333] pb-2">
-                    <span className="text-[#c19d44] font-medium">Structure Patterns:</span>
-                    <div className="text-white mt-1">
+                  <div className="border-b border-gray-600 pb-3">
+                    <span className="text-yellow-500 font-medium">Structure Patterns:</span>
+                    <div className="text-white mt-2">
                       prefix + niche keyword + suffix | niche keyword + descriptive word
                     </div>
                   </div>
                   <div>
-                    <span className="text-[#c19d44] font-medium">Brand Positioning:</span>
-                    <div className="text-white mt-1">
-                      {results.patterns.recommendations?.brandPositioning || 'Domains should convey sophistication, quality, and a sense of exclusivity to attract high-ticket customers.'}
+                    <span className="text-yellow-500 font-medium">Brand Positioning:</span>
+                    <div className="text-white mt-2">
+                      {results.patterns.recommendations?.brandPositioning || 'Domains should convey elegance, quality, and exclusivity to attract high-ticket customers.'}
                     </div>
                   </div>
                 </div>
@@ -182,35 +182,35 @@ const DomainGenerator: React.FC = () => {
             {/* Right Column */}
             <div className="space-y-8">
               {/* Top Recommendation */}
-              <div className="bg-transparent rounded-2xl p-6 border border-[#333333]">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  <Star size={20} className="text-[#c19d44]" />
+              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                  <Star size={24} className="text-yellow-500" />
                   Our Top Recommendation
                 </h3>
-                <div className="bg-[#c19d44] rounded-lg p-6 text-center shadow-lg">
-                  <div className="text-2xl font-bold text-[#080808] mb-2">{results.recommendation.domain}</div>
-                  <div className="text-lg text-[#080808]">${results.recommendation.price}/year</div>
+                <div className="bg-yellow-500 rounded-lg p-8 text-center shadow-lg">
+                  <div className="text-3xl font-bold text-black mb-3">{results.recommendation.domain}</div>
+                  <div className="text-xl text-black">${results.recommendation.price}/year</div>
                 </div>
               </div>
 
               {/* Alternative Options */}
-              <div className="bg-transparent rounded-2xl p-6 border border-[#333333]">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  <List size={20} className="text-[#c19d44]" />
+              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                  <List size={24} className="text-yellow-500" />
                   Alternative Options
                 </h3>
-                <div className="space-y-3 mb-6">
+                <div className="space-y-4 mb-8">
                   {results.alternatives.map((domain, index) => (
-                    <div key={index} className="bg-transparent border border-[#333333] rounded-lg p-4 flex justify-between items-center">
-                      <div className="text-white font-medium">{domain.domain}</div>
-                      <div className="text-white">${domain.price}/year</div>
+                    <div key={index} className="bg-gray-700 border border-gray-600 rounded-lg p-4 flex justify-between items-center hover:border-yellow-500 transition-colors">
+                      <div className="text-white font-medium text-lg">{domain.domain}</div>
+                      <div className="text-gray-400">${domain.price}/year</div>
                     </div>
                   ))}
                 </div>
                 <button
                   onClick={generateMoreDomains}
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-transparent border border-[#c19d44] text-white rounded-lg hover:bg-[#c19d44] hover:text-[#080808] disabled:opacity-50 flex items-center justify-center gap-2 transition-all"
+                  className="w-full px-6 py-4 bg-gray-700 border border-gray-600 text-white rounded-lg hover:bg-gray-600 hover:border-yellow-500 disabled:opacity-50 flex items-center justify-center gap-2 transition-all text-lg"
                 >
                   <Plus size={20} />
                   + Generate 5 More Options
