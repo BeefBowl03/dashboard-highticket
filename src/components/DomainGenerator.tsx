@@ -112,110 +112,104 @@ const DomainGenerator: React.FC = () => {
 
         {/* Results Section */}
         {results && !loading && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Left Column */}
-            <div className="space-y-8">
-              {/* Popular Stores */}
-              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
-                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                  <Globe size={24} className="text-yellow-500" />
-                  Popular Stores in Your Niche
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {results.competitors.slice(0, 4).map((competitor, index) => (
-                    <div key={index} className="bg-gray-700 border border-gray-600 rounded-lg p-4 hover:border-yellow-500 transition-colors">
-                      <a
-                        href={competitor.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-white hover:text-yellow-500 font-medium block text-lg"
-                      >
-                        {competitor.name}
-                      </a>
-                      <div className="text-gray-400 text-sm mt-1">{competitor.domain}</div>
-                    </div>
-                  ))}
-                </div>
+          <div className="space-y-8">
+            {/* Popular Stores */}
+            <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                <Globe size={24} className="text-yellow-500" />
+                Popular Stores in Your Niche
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                {results.competitors.slice(0, 4).map((competitor, index) => (
+                  <div key={index} className="bg-gray-700 border border-gray-600 rounded-lg p-4 hover:border-yellow-500 transition-colors">
+                    <a
+                      href={competitor.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white hover:text-yellow-500 font-medium block text-lg"
+                    >
+                      {competitor.name}
+                    </a>
+                    <div className="text-gray-400 text-sm mt-1">{competitor.domain}</div>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              {/* Domain Patterns */}
-              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
-                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                  <Search size={24} className="text-yellow-500" />
-                  Domain Patterns Found:
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center border-b border-gray-600 pb-3">
-                    <span className="text-yellow-500 font-medium">Average Length:</span>
-                    <span className="text-white font-medium">{results.patterns.patterns?.averageLength || 12} characters</span>
+            {/* Domain Patterns */}
+            <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                <Search size={24} className="text-yellow-500" />
+                Domain Patterns Found:
+              </h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center border-b border-gray-600 pb-3">
+                  <span className="text-yellow-500 font-medium">Average Length:</span>
+                  <span className="text-white font-medium">{results.patterns.patterns?.averageLength || 12} characters</span>
+                </div>
+                <div className="flex justify-between items-center border-b border-gray-600 pb-3">
+                  <span className="text-yellow-500 font-medium">Length Range:</span>
+                  <span className="text-white font-medium">{results.patterns.recommendations?.optimalLength || '12-20 characters'}</span>
+                </div>
+                <div className="flex justify-between items-center border-b border-gray-600 pb-3">
+                  <span className="text-yellow-500 font-medium">Most Common Word Count:</span>
+                  <span className="text-white font-medium">{results.patterns.patterns?.wordCount || '2-3 words'}</span>
+                </div>
+                <div className="border-b border-gray-600 pb-3">
+                  <span className="text-yellow-500 font-medium">Niche Keywords:</span>
+                  <div className="text-white mt-2">
+                    {results.patterns.nicheKeywords?.join(', ') || 'backyard, yard, patio, deck, outdoor, garden space, courtyard'}
                   </div>
-                  <div className="flex justify-between items-center border-b border-gray-600 pb-3">
-                    <span className="text-yellow-500 font-medium">Length Range:</span>
-                    <span className="text-white font-medium">{results.patterns.recommendations?.optimalLength || '12-20 characters'}</span>
+                </div>
+                <div className="border-b border-gray-600 pb-3">
+                  <span className="text-yellow-500 font-medium">Structure Patterns:</span>
+                  <div className="text-white mt-2">
+                    prefix + niche keyword + suffix | niche keyword + descriptive word
                   </div>
-                  <div className="flex justify-between items-center border-b border-gray-600 pb-3">
-                    <span className="text-yellow-500 font-medium">Most Common Word Count:</span>
-                    <span className="text-white font-medium">{results.patterns.patterns?.wordCount || '2-3 words'}</span>
-                  </div>
-                  <div className="border-b border-gray-600 pb-3">
-                    <span className="text-yellow-500 font-medium">Niche Keywords:</span>
-                    <div className="text-white mt-2">
-                      {results.patterns.nicheKeywords?.join(', ') || 'backyard, yard, patio, deck, outdoor, garden space, courtyard'}
-                    </div>
-                  </div>
-                  <div className="border-b border-gray-600 pb-3">
-                    <span className="text-yellow-500 font-medium">Structure Patterns:</span>
-                    <div className="text-white mt-2">
-                      prefix + niche keyword + suffix | niche keyword + descriptive word
-                    </div>
-                  </div>
-                  <div>
-                    <span className="text-yellow-500 font-medium">Brand Positioning:</span>
-                    <div className="text-white mt-2">
-                      {results.patterns.recommendations?.brandPositioning || 'Domains should convey elegance, quality, and exclusivity to attract high-ticket customers.'}
-                    </div>
+                </div>
+                <div>
+                  <span className="text-yellow-500 font-medium">Brand Positioning:</span>
+                  <div className="text-white mt-2">
+                    {results.patterns.recommendations?.brandPositioning || 'Domains should convey elegance, quality, and exclusivity to attract high-ticket customers.'}
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Right Column */}
-            <div className="space-y-8">
-              {/* Top Recommendation */}
-              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
-                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                  <Star size={24} className="text-yellow-500" />
-                  Our Top Recommendation
-                </h3>
-                <div className="bg-yellow-500 rounded-lg p-8 text-center shadow-lg">
-                  <div className="text-3xl font-bold text-black mb-3">{results.recommendation.domain}</div>
-                  <div className="text-xl text-black">${results.recommendation.price}/year</div>
-                </div>
+            {/* Top Recommendation */}
+            <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                <Star size={24} className="text-yellow-500" />
+                Our Top Recommendation
+              </h3>
+              <div className="bg-yellow-500 rounded-lg p-8 text-center shadow-lg">
+                <div className="text-3xl font-bold text-black mb-3">{results.recommendation.domain}</div>
+                <div className="text-xl text-black">${results.recommendation.price}/year</div>
               </div>
+            </div>
 
-              {/* Alternative Options */}
-              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
-                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                  <List size={24} className="text-yellow-500" />
-                  Alternative Options
-                </h3>
-                <div className="space-y-4 mb-8">
-                  {results.alternatives.map((domain, index) => (
-                    <div key={index} className="bg-gray-700 border border-gray-600 rounded-lg p-4 flex justify-between items-center hover:border-yellow-500 transition-colors">
-                      <div className="text-white font-medium text-lg">{domain.domain}</div>
-                      <div className="text-gray-400">${domain.price}/year</div>
-                    </div>
-                  ))}
-                </div>
-                <button
-                  onClick={generateMoreDomains}
-                  disabled={loading}
-                  className="w-full px-6 py-4 bg-gray-700 border border-gray-600 text-white rounded-lg hover:bg-gray-600 hover:border-yellow-500 disabled:opacity-50 flex items-center justify-center gap-2 transition-all text-lg"
-                >
-                  <Plus size={20} />
-                  + Generate 5 More Options
-                </button>
+            {/* Alternative Options */}
+            <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                <List size={24} className="text-yellow-500" />
+                Alternative Options
+              </h3>
+              <div className="space-y-4 mb-8">
+                {results.alternatives.map((domain, index) => (
+                  <div key={index} className="bg-gray-700 border border-gray-600 rounded-lg p-4 flex justify-between items-center hover:border-yellow-500 transition-colors">
+                    <div className="text-white font-medium text-lg">{domain.domain}</div>
+                    <div className="text-gray-400">${domain.price}/year</div>
+                  </div>
+                ))}
               </div>
+              <button
+                onClick={generateMoreDomains}
+                disabled={loading}
+                className="w-full px-6 py-4 bg-gray-700 border border-gray-600 text-white rounded-lg hover:bg-gray-600 hover:border-yellow-500 disabled:opacity-50 flex items-center justify-center gap-2 transition-all text-lg"
+              >
+                <Plus size={20} />
+                + Generate 5 More Options
+              </button>
             </div>
           </div>
         )}
