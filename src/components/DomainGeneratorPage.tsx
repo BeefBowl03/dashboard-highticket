@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Globe } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import DomainGenerator from './DomainGenerator';
 
 const DomainGeneratorPage: React.FC = () => {
