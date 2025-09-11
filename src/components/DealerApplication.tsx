@@ -14,8 +14,7 @@ import {
   Loader2,
   ArrowLeft,
   ArrowRight,
-  CheckCircle,
-  Circle
+  CheckCircle
 } from 'lucide-react';
 
 interface DealerDetails {
