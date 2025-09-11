@@ -86,7 +86,7 @@ const LogoGenerator = () => {
 
   return (
     <div className="min-h-screen flex items-start justify-center px-4">
-      <div className="w-full bg-gray-800 rounded-2xl shadow-lg p-10 text-white">
+      <div className="w-full rounded-2xl shadow-lg p-10 text-white">
         {/* Step indicator */}
         <div className="mb-8">
           <div className="flex justify-between text-sm text-gray-400">
@@ -120,7 +120,7 @@ const LogoGenerator = () => {
               value={storeName}
               onChange={(e) => setStoreName(e.target.value)}
               placeholder="Enter your store name..."
-              className="w-full p-4 border border-yellow-500 rounded-lg bg-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none mb-6"
+              className="w-full p-4 border border-yellow-500 rounded-lg bg-transparent text-white placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none mb-6"
             />
 
             {/* niche prompt */}
@@ -135,7 +135,7 @@ const LogoGenerator = () => {
                   value={userNiche}
                   onChange={(e) => setUserNiche(e.target.value)}
                   placeholder="Enter your niche..."
-                  className="w-full p-3 border border-yellow-500 rounded-lg bg-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                  className="w-full p-3 border border-yellow-500 rounded-lg bg-transparent text-white placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none"
                 />
               </div>
             )}
@@ -166,7 +166,7 @@ const LogoGenerator = () => {
             <h2 className="text-xl font-bold text-yellow-500 mb-4">
               Your Generated Logo
             </h2>
-            <div className="border border-gray-700 rounded-lg p-6 bg-gray-900">
+            <div className="border border-gray-700 rounded-lg p-6">
               <img
                 src={generatedLogo}
                 alt="Generated Logo"
@@ -207,7 +207,7 @@ const LogoGenerator = () => {
                     value={remixInstructions}
                     onChange={(e) => setRemixInstructions(e.target.value)}
                     placeholder="Enter specific remix instructions..."
-                    className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white placeholder-gray-500 mb-2"
+                    className="w-full p-2 border border-gray-600 rounded bg-transparent text-white placeholder-gray-500 mb-2"
                     rows={3}
                   />
                   <button

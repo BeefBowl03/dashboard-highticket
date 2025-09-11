@@ -57,142 +57,180 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div className="profile-container">
-      <div className="profile-header">
-        <button className="back-button" onClick={handleBack}>
-          <ArrowLeft size={20} />
-          <span>Back to Dashboard</span>
-        </button>
-        
-        <div className="profile-actions">
-          {!isEditing ? (
-            <button className="edit-button" onClick={handleEdit}>
-              <Edit3 size={16} />
-              <span>Edit Profile</span>
-            </button>
-          ) : (
-            <div className="edit-actions">
-              <button className="cancel-button" onClick={handleCancel}>
-                <X size={16} />
-                <span>Cancel</span>
+    <div className="dashboard-container">
+      <div className="main-content">
+        {/* Header */}
+        <div className="content-header">
+          <button
+            onClick={handleBack}
+            className="back-button"
+          >
+            <ArrowLeft size={20} />
+            Back to Dashboard
+          </button>
+          
+          <div className="flex items-center gap-2">
+            {!isEditing ? (
+              <button className="tool-button secondary flex items-center gap-2" onClick={handleEdit}>
+                <Edit3 size={16} />
+                Edit Profile
               </button>
-              <button className="save-button" onClick={handleSave}>
-                <Save size={16} />
-                <span>Save</span>
-              </button>
-            </div>
-          )}
+            ) : (
+              <div className="flex items-center gap-2">
+                <button className="tool-button secondary flex items-center gap-2" onClick={handleCancel}>
+                  <X size={16} />
+                  Cancel
+                </button>
+                <button className="tool-button primary flex items-center gap-2" onClick={handleSave}>
+                  <Save size={16} />
+                  Save
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
 
-      <div className="profile-content">
-        <div className="profile-card">
-          <div className="profile-avatar-section">
-            <div className="profile-avatar">
-              <User size={48} />
+        <div className="main-logo">
+          <img 
+            src="https://cdn.prod.website-files.com/67692e83aa3faae2c7985fcc/679934bc5b34b807e6cac177_highticket-logo-full-white.svg" 
+            alt="HighTicket.io" 
+            className="logo-svg"
+          />
+        </div>
+
+        <div className="tools-section">
+          <h2>Profile</h2>
+          <p className="text-[#ffffff80] mb-8">Manage your account information and preferences.</p>
+        </div>
+
+        <div className="tool-content-wrapper">
+          <div className="tool-card">
+            <div className="tool-header mb-6">
+              <div className="tool-icon">
+                <User size={32} />
+              </div>
+              <div className="tool-status ready">
+                Account Settings
+              </div>
             </div>
-            <h1 className="profile-name">{formData.name}</h1>
-            <p className="profile-role">Business Owner</p>
-          </div>
-
-          <div className="profile-info">
-            <h2>Profile Information</h2>
             
-            <div className="info-grid">
-              <div className="info-item">
-                <div className="info-label">
-                  <User size={16} />
-                  <span>Full Name</span>
+            <div className="tool-content">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-16 h-16 bg-[#2d2d2d] rounded-full flex items-center justify-center">
+                  <User size={32} className="text-[#888]" />
                 </div>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="info-input"
-                  />
-                ) : (
-                  <span className="info-value">{formData.name}</span>
-                )}
+                <div>
+                  <h3 className="tool-title mb-1">{formData.name}</h3>
+                  <p className="text-[#ffffff80]">Business Owner</p>
+                </div>
               </div>
 
-              <div className="info-item">
-                <div className="info-label">
-                  <Mail size={16} />
-                  <span>Email Address</span>
+              <div className="grid gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-[#ffffff80] flex items-center gap-2">
+                    <User size={16} />
+                    Full Name
+                  </label>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
+                      className="w-full px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white placeholder-[#888] focus:outline-none focus:ring-2 focus:ring-[#c19d44] focus:border-transparent transition-all"
+                    />
+                  ) : (
+                    <div className="px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white">
+                      {formData.name}
+                    </div>
+                  )}
                 </div>
-                {isEditing ? (
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="info-input"
-                  />
-                ) : (
-                  <span className="info-value">{formData.email}</span>
-                )}
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-[#ffffff80] flex items-center gap-2">
+                    <Mail size={16} />
+                    Email Address
+                  </label>
+                  {isEditing ? (
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      className="w-full px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white placeholder-[#888] focus:outline-none focus:ring-2 focus:ring-[#c19d44] focus:border-transparent transition-all"
+                    />
+                  ) : (
+                    <div className="px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white">
+                      {formData.email}
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-[#ffffff80] flex items-center gap-2">
+                    <Phone size={16} />
+                    Phone Number
+                  </label>
+                  {isEditing ? (
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      placeholder="Enter your phone number"
+                      className="w-full px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white placeholder-[#888] focus:outline-none focus:ring-2 focus:ring-[#c19d44] focus:border-transparent transition-all"
+                    />
+                  ) : (
+                    <div className="px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white">
+                      {formData.phone || 'Not provided'}
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-[#ffffff80] flex items-center gap-2">
+                    <MapPin size={16} />
+                    Location
+                  </label>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={formData.location}
+                      onChange={(e) => handleInputChange('location', e.target.value)}
+                      placeholder="Enter your location"
+                      className="w-full px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white placeholder-[#888] focus:outline-none focus:ring-2 focus:ring-[#c19d44] focus:border-transparent transition-all"
+                    />
+                  ) : (
+                    <div className="px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white">
+                      {formData.location || 'Not provided'}
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-[#ffffff80] flex items-center gap-2">
+                    <Calendar size={16} />
+                    Member Since
+                  </label>
+                  <div className="px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white">
+                    January 15, 2024
+                  </div>
+                </div>
               </div>
 
-              <div className="info-item">
-                <div className="info-label">
-                  <Phone size={16} />
-                  <span>Phone Number</span>
+              <div className="mt-8 pt-6 border-t border-[#333333]">
+                <h3 className="tool-title mb-4">Account Statistics</h3>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center p-4 bg-transparent border border-[#333333] rounded-lg">
+                    <div className="text-2xl font-bold text-[#c19d44] mb-1">6</div>
+                    <div className="text-sm text-[#ffffff80]">Active Tools</div>
+                  </div>
+                  <div className="text-center p-4 bg-transparent border border-[#333333] rounded-lg">
+                    <div className="text-2xl font-bold text-[#c19d44] mb-1">8</div>
+                    <div className="text-sm text-[#ffffff80]">Total Conversations</div>
+                  </div>
+                  <div className="text-center p-4 bg-transparent border border-[#333333] rounded-lg">
+                    <div className="text-2xl font-bold text-[#c19d44] mb-1">3</div>
+                    <div className="text-sm text-[#ffffff80]">Projects Created</div>
+                  </div>
                 </div>
-                {isEditing ? (
-                  <input
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange('phone', e.target.value)}
-                    placeholder="Enter your phone number"
-                    className="info-input"
-                  />
-                ) : (
-                  <span className="info-value">{formData.phone || 'Not provided'}</span>
-                )}
-              </div>
-
-              <div className="info-item">
-                <div className="info-label">
-                  <MapPin size={16} />
-                  <span>Location</span>
-                </div>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={formData.location}
-                    onChange={(e) => handleInputChange('location', e.target.value)}
-                    placeholder="Enter your location"
-                    className="info-input"
-                  />
-                ) : (
-                  <span className="info-value">{formData.location || 'Not provided'}</span>
-                )}
-              </div>
-
-              <div className="info-item">
-                <div className="info-label">
-                  <Calendar size={16} />
-                  <span>Member Since</span>
-                </div>
-                <span className="info-value">January 15, 2024</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="profile-stats">
-            <h2>Account Statistics</h2>
-            <div className="stats-grid">
-              <div className="stat-item">
-                <div className="stat-value">6</div>
-                <div className="stat-label">Active Tools</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-value">8</div>
-                <div className="stat-label">Total Conversations</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-value">3</div>
-                <div className="stat-label">Projects Created</div>
               </div>
             </div>
           </div>

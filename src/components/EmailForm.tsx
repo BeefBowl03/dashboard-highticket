@@ -40,22 +40,22 @@ export default function EmailForm({ onSubmit, isLoading, initialData }: EmailFor
     formData.storeName && formData.niche && formData.targetDemographic && formData.contactFirstName;
 
   const inputClasses =
-    "w-full rounded-lg border border-yellow-500/50 bg-gray-800 text-white placeholder-gray-400 " +
-    "focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 px-3 py-2 transition";
+    "w-full rounded-lg border border-[#333333] bg-transparent text-white placeholder-[#888] " +
+    "focus:border-[#c19d44] focus:ring-2 focus:ring-[#c19d44] px-3 py-2 transition";
 
   return (
-    <div className="rounded-2xl p-8 max-w-2xl mx-auto bg-gray-800 text-white">
+    <div className="rounded-2xl p-8 max-w-2xl mx-auto bg-transparent text-white">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-yellow-500 mb-2">AI Cold Email Generator</h2>
-        <p className="text-gray-300">Fill in the details to generate your cold email copy</p>
+        <h2 className="text-3xl font-bold text-[#c19d44] mb-2">AI Cold Email Generator</h2>
+        <p className="text-[#ffffff80]">Fill in the details to generate your cold email copy</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Required Fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="flex items-center text-sm font-medium text-gray-200">
-              <Building className="w-4 h-4 mr-2 text-yellow-500" />
+            <label className="flex items-center text-sm font-medium text-[#ffffff80]">
+              <Building className="w-4 h-4 mr-2 text-[#c19d44]" />
               Store Name *
             </label>
             <input
@@ -70,8 +70,8 @@ export default function EmailForm({ onSubmit, isLoading, initialData }: EmailFor
           </div>
 
           <div className="space-y-2">
-            <label className="flex items-center text-sm font-medium text-gray-200">
-              <Target className="w-4 h-4 mr-2 text-yellow-500" />
+            <label className="flex items-center text-sm font-medium text-[#ffffff80]">
+              <Target className="w-4 h-4 mr-2 text-[#c19d44]" />
               Niche *
             </label>
             <input
@@ -88,8 +88,8 @@ export default function EmailForm({ onSubmit, isLoading, initialData }: EmailFor
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="flex items-center text-sm font-medium text-gray-200">
-              <User className="w-4 h-4 mr-2 text-yellow-500" />
+            <label className="flex items-center text-sm font-medium text-[#ffffff80]">
+              <User className="w-4 h-4 mr-2 text-[#c19d44]" />
               Target Demographic *
             </label>
             <input
@@ -104,8 +104,8 @@ export default function EmailForm({ onSubmit, isLoading, initialData }: EmailFor
           </div>
 
           <div className="space-y-2">
-            <label className="flex items-center text-sm font-medium text-gray-200">
-              <Mail className="w-4 h-4 mr-2 text-yellow-500" />
+            <label className="flex items-center text-sm font-medium text-[#ffffff80]">
+              <Mail className="w-4 h-4 mr-2 text-[#c19d44]" />
               Your First Name *
             </label>
             <input
@@ -121,15 +121,15 @@ export default function EmailForm({ onSubmit, isLoading, initialData }: EmailFor
         </div>
 
         {/* Optional Fields */}
-        <div className="pt-6 border-t border-gray-700">
+        <div className="pt-6 border-t border-[#333333]">
           <h3 className="text-lg font-semibold text-white mb-4">
             Optional Details (Enhances Credibility)
           </h3>
 
           <div className="space-y-6">
             <div className="space-y-2">
-              <label className="flex items-center text-sm font-medium text-gray-200">
-                <Briefcase className="w-4 h-4 mr-2 text-yellow-500" />
+              <label className="flex items-center text-sm font-medium text-[#ffffff80]">
+                <Briefcase className="w-4 h-4 mr-2 text-[#c19d44]" />
                 Marketing Experience (if any)
               </label>
               <input
@@ -143,8 +143,8 @@ export default function EmailForm({ onSubmit, isLoading, initialData }: EmailFor
             </div>
 
             <div className="space-y-2">
-              <label className="flex items-center text-sm font-medium text-gray-200">
-                <GraduationCap className="w-4 h-4 mr-2 text-yellow-500" />
+              <label className="flex items-center text-sm font-medium text-[#ffffff80]">
+                <GraduationCap className="w-4 h-4 mr-2 text-[#c19d44]" />
                 Niche Experience (if any)
               </label>
               <input
@@ -158,8 +158,8 @@ export default function EmailForm({ onSubmit, isLoading, initialData }: EmailFor
             </div>
 
             <div className="space-y-2">
-              <label className="flex items-center text-sm font-medium text-gray-200">
-                <Heart className="w-4 h-4 mr-2 text-yellow-500" />
+              <label className="flex items-center text-sm font-medium text-[#ffffff80]">
+                <Heart className="w-4 h-4 mr-2 text-[#c19d44]" />
                 Why This Niche Matters to You
               </label>
               <textarea
@@ -173,8 +173,8 @@ export default function EmailForm({ onSubmit, isLoading, initialData }: EmailFor
             </div>
 
             <div className="space-y-2">
-              <label className="flex items-center text-sm font-medium text-gray-200">
-                <Building className="w-4 h-4 mr-2 text-yellow-500" />
+              <label className="flex items-center text-sm font-medium text-[#ffffff80]">
+                <Building className="w-4 h-4 mr-2 text-[#c19d44]" />
                 Supplier Name (if targeting specific supplier)
               </label>
               <input
@@ -192,12 +192,12 @@ export default function EmailForm({ onSubmit, isLoading, initialData }: EmailFor
           <button
             type="submit"
             disabled={!isFormValid || isLoading}
-            className="w-full bg-yellow-500 text-gray-900 font-semibold py-3 rounded-lg 
-                       hover:bg-yellow-400 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#c19d44] text-[#080808] font-semibold py-3 rounded-lg 
+                       hover:bg-[#a88a3b] transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <div className="flex items-center justify-center">
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 mr-2"></div>
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#080808] mr-2"></div>
                 Generating Email...
               </div>
             ) : (
