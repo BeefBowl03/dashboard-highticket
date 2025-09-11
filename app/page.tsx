@@ -76,13 +76,13 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="container mx-auto px-4 py-12">
+        <div className="text-center mb-16">
+          <h1 className="text-5xl font-bold text-gray-900 mb-6">
             High-Ticket Dashboard
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Your all-in-one toolkit for building successful high-ticket dropshipping stores
           </p>
         </div>
@@ -95,23 +95,24 @@ export default function Dashboard() {
                 key={tool.id}
                 onClick={() => handleToolClick(tool.id)}
                 className={`
-                  bg-white rounded-lg shadow-lg p-6 cursor-pointer transition-all duration-200
-                  hover:shadow-xl transform hover:-translate-y-1
+                  bg-white rounded-xl shadow-lg p-8 cursor-pointer transition-all duration-300
+                  hover:shadow-2xl transform hover:-translate-y-2 hover:scale-105
+                  border border-gray-100
                   ${isLoading === tool.id ? 'opacity-50 cursor-not-allowed' : ''}
                 `}
               >
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-6">
                   <div className={`
                     ${tool.color} ${tool.hoverColor} 
-                    p-3 rounded-lg text-white transition-colors duration-200
+                    p-4 rounded-xl text-white transition-colors duration-200 shadow-lg
                   `}>
-                    <IconComponent size={24} />
+                    <IconComponent size={28} />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 ml-4">
+                  <h3 className="text-xl font-bold text-gray-900 ml-4">
                     {tool.title}
                   </h3>
                 </div>
-                <p className="text-gray-600">
+                <p className="text-gray-600 leading-relaxed">
                   {tool.description}
                 </p>
                 {isLoading === tool.id && (
