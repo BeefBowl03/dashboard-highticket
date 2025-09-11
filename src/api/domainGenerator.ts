@@ -34,10 +34,8 @@ export interface DomainGeneratorResponse {
   totalAvailable: number;
 }
 
-// Backend API base URL - automatically detects environment
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? '' // Use relative URLs in production (same domain)
-  : 'http://localhost:3001'; // Use localhost in development
+// Backend API base URL - use relative URLs for serverless deployment
+const API_BASE_URL = ''; // Always use relative URLs for Vercel serverless functions
 
 // Main function to generate domains for a niche using backend API
 export async function generateDomainsForNiche(niche: string): Promise<DomainGeneratorResponse> {
