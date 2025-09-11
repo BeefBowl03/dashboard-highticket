@@ -53,27 +53,6 @@ body {
     padding-bottom: 3rem;
 }
 
-/* Header with Logo */
-.content-header {
-    margin-bottom: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.main-logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 40px;
-}
-
-.logo-svg {
-    height: 60px;
-    width: auto;
-    max-width: 400px;
-    filter: brightness(1);
-}
 
 /* Search Section */
 .search-section {
@@ -104,7 +83,7 @@ body {
 }
 
 .input-group input {
-    flex: 1;
+    flex: 2;
     padding: 1.2rem 1.5rem;
     background: #0a0a0a;
     border: 2px solid #333;
@@ -112,6 +91,30 @@ body {
     font-size: 1rem;
     color: #ffffff;
     transition: all 0.3s ease;
+}
+
+.input-group .btn-primary {
+    flex: 1;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    justify-content: center;
+    background: linear-gradient(189deg, #aa813c, #fdf3ad 52%, #d5b356 80%, #c19d44);
+    background-size: 300% 300%;
+    color: #080808;
+    font-weight: 700;
+    animation: gradientShift 3s ease infinite;
+    box-shadow: 0 4px 16px rgba(170, 129, 60, 0.3);
+    font-family: Aeonik, Arial, sans-serif;
+    letter-spacing: -0.12px;
 }
 
 .input-group input:focus {
@@ -723,15 +726,6 @@ body {
         margin-bottom: 0.25rem;
     }
     
-    /* Logo responsive */
-    .logo-svg {
-        height: 50px;
-        max-width: 300px;
-    }
-    
-    .main-logo {
-        margin-bottom: 30px;
-    }
 }
 
 /* Mobile phones */
@@ -921,15 +915,6 @@ body {
         padding: 1rem 1.5rem;
     }
     
-    /* Logo mobile */
-    .logo-svg {
-        height: 40px;
-        max-width: 250px;
-    }
-    
-    .main-logo {
-        margin-bottom: 20px;
-    }
 }
 
 /* Very small screens */
