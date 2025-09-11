@@ -45,87 +45,50 @@ interface DealerDetails {
   outreachMessage: string;
 }
 
-const initialDetails: DealerDetails = {
-  contactFirstName: '',
-  contactLastName: '',
-  contactEmail: '',
-  contactPhone: '',
-  storeName: '',
-  websiteDomain: '',
-  legalStructure: 'LLC',
-  ein: '',
-  yearFounded: '2023',
-  businessStreet: '',
-  businessCity: '',
-  businessState: '',
-  businessPostalCode: '',
-  businessCountry: 'United States',
-  niche: '',
-  targetCustomerSegment: '',
-  estimatedSales: '$700,000',
-  employees: '',
-  resaleCertificate: '',
-  businessLicense: '',
-  supplierName: '',
-  dealerFormUrl: '',
-  dealerFormFields: '',
-  outreachMessage: '',
-};
-
-const steps = [
-  { title: 'Contact Info', icon: User },
-  { title: 'Business Address', icon: MapPin },
-  { title: 'Target Customers', icon: Users },
-  { title: 'Sales Estimates', icon: DollarSign },
-  { title: 'Team Size', icon: Users },
-  { title: 'Legal Documents', icon: FileText },
-  { title: 'Supplier Info', icon: Store },
-  { title: 'Dealer Form', icon: Globe },
-  { title: 'Review & Generate', icon: CheckCircle },
-];
-
-interface FieldProps {
-  label: string;
-  placeholder?: string;
-  value: string;
-  onChange: (v: string) => void;
-  type?: string;
-  required?: boolean;
-  icon?: React.ReactNode;
-}
-
-function Field({ label, placeholder, value, onChange, type = 'text', required, icon }: FieldProps) {
-  const showRequired = required && !value.trim();
-
-  return (
-    <div className="grid gap-1">
-      <label className="flex items-center gap-2 text-sm font-medium text-white">
-        {icon && <span className="text-[#FACC15]">{icon}</span>}
-        {label} {required && <span className="text-[#FACC15]">*</span>}
-      </label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className={`rounded-md border px-3 py-2 text-sm transition-colors ${
-          showRequired
-            ? 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500'
-            : 'border-gray-300 bg-white text-gray-900 focus:border-[#FACC15] focus:ring-[#FACC15]'
-        } focus:outline-none focus:ring-1`}
-      />
-    </div>
-  );
-}
-
-export default function DealerApplication() {
+const DealerApplication: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [details, setDetails] = useState<DealerDetails>(initialDetails);
+  const [details, setDetails] = useState<DealerDetails>({
+    contactFirstName: '',
+    contactLastName: '',
+    contactEmail: '',
+    contactPhone: '',
+    storeName: '',
+    websiteDomain: '',
+    legalStructure: 'LLC',
+    ein: '',
+    yearFounded: '2023',
+    businessStreet: '',
+    businessCity: '',
+    businessState: '',
+    businessPostalCode: '',
+    businessCountry: 'United States',
+    niche: '',
+    targetCustomerSegment: '',
+    estimatedSales: '$700,000',
+    employees: '',
+    resaleCertificate: '',
+    businessLicense: '',
+    supplierName: '',
+    dealerFormUrl: '',
+    dealerFormFields: '',
+    outreachMessage: ''
+  });
+
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedTemplate, setGeneratedTemplate] = useState('');
 
-  const updateField = (key: keyof DealerDetails, value: string) => {
-    setDetails(prev => ({ ...prev, [key]: value }));
+  const steps = [
+    { id: 'contact', title: 'Contact Information', icon: User },
+    { id: 'business', title: 'Business Details', icon: Store },
+    { id: 'address', title: 'Business Address', icon: MapPin },
+    { id: 'marketing', title: 'Marketing & Sales', icon: Tag },
+    { id: 'legal', title: 'Legal & Compliance', icon: FileText },
+    { id: 'supplier', title: 'Supplier Information', icon: Briefcase },
+    { id: 'review', title: 'Review & Generate', icon: CheckCircle }
+  ];
+
+  const updateField = (field: keyof DealerDetails, value: string) => {
+    setDetails(prev => ({ ...prev, [field]: value }));
   };
 
   const nextStep = () => {
@@ -163,210 +126,280 @@ export default function DealerApplication() {
     }
   };
 
+  const Field: React.FC<{
+    label: string;
+    placeholder: string;
+    value: string;
+    onChange: (value: string) => void;
+    icon: React.ReactNode;
+    required?: boolean;
+    type?: string;
+  }> = ({ label, placeholder, value, onChange, icon, required = false, type = 'text' }) => (
+    <div className="space-y-2">
+      <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
+        {icon}
+        {label}
+        {required && <span className="text-red-400">*</span>}
+      </label>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FACC15] focus:border-transparent"
+      />
+    </div>
+  );
+
   const renderStep = () => {
     switch (currentStep) {
-      case 0: // Contact Info
+      case 0: // Contact Information
         return (
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Field
-                label="First Name"
-                value={details.contactFirstName}
-                onChange={(v) => updateField('contactFirstName', v)}
-                required
-                icon={<User className="w-4 h-4" />}
-              />
-              <Field
-                label="Last Name"
-                value={details.contactLastName}
-                onChange={(v) => updateField('contactLastName', v)}
-                required
-                icon={<User className="w-4 h-4" />}
-              />
-            </div>
+          <div className="grid gap-4">
             <Field
-              label="Email"
+              label="First Name"
+              placeholder="e.g., John"
+              required
+              value={details.contactFirstName}
+              onChange={(v) => updateField('contactFirstName', v)}
+              icon={<User size={16} />}
+            />
+            <Field
+              label="Last Name"
+              placeholder="e.g., Doe"
+              required
+              value={details.contactLastName}
+              onChange={(v) => updateField('contactLastName', v)}
+              icon={<User size={16} />}
+            />
+            <Field
+              label="Business Email"
+              placeholder="e.g., john@myshop.com"
+              required
               type="email"
               value={details.contactEmail}
               onChange={(v) => updateField('contactEmail', v)}
-              required
-              icon={<Mail className="w-4 h-4" />}
+              icon={<Mail size={16} />}
             />
             <Field
-              label="Phone"
-              type="tel"
+              label="Phone Number"
+              placeholder="e.g., +1 555 123 4567"
               value={details.contactPhone}
               onChange={(v) => updateField('contactPhone', v)}
-              required
-              icon={<Phone className="w-4 h-4" />}
+              icon={<Phone size={16} />}
             />
           </div>
         );
 
-      case 1: // Business Address
+      case 1: // Business Details
         return (
-          <div className="space-y-4">
+          <div className="grid gap-4">
+            <Field
+              label="Store/Business Name"
+              placeholder="e.g., My Awesome Store"
+              required
+              value={details.storeName}
+              onChange={(v) => updateField('storeName', v)}
+              icon={<Store size={16} />}
+            />
+            <Field
+              label="Website Domain"
+              placeholder="e.g., myawesomestore.com"
+              value={details.websiteDomain}
+              onChange={(v) => updateField('websiteDomain', v)}
+              icon={<Globe size={16} />}
+            />
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
+                <Briefcase size={16} />
+                Legal Structure
+              </label>
+              <select
+                value={details.legalStructure}
+                onChange={(e) => updateField('legalStructure', e.target.value)}
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#FACC15] focus:border-transparent"
+              >
+                <option value="LLC">LLC</option>
+                <option value="Corporation">Corporation</option>
+                <option value="Partnership">Partnership</option>
+                <option value="Sole Proprietorship">Sole Proprietorship</option>
+              </select>
+            </div>
+            <Field
+              label="EIN (Tax ID)"
+              placeholder="e.g., 12-3456789"
+              value={details.ein}
+              onChange={(v) => updateField('ein', v)}
+              icon={<FileText size={16} />}
+            />
+            <Field
+              label="Year Founded"
+              placeholder="e.g., 2023"
+              value={details.yearFounded}
+              onChange={(v) => updateField('yearFounded', v)}
+              icon={<FileText size={16} />}
+            />
+          </div>
+        );
+
+      case 2: // Business Address
+        return (
+          <div className="grid gap-4">
             <Field
               label="Street Address"
+              placeholder="e.g., 123 Main Street"
+              required
               value={details.businessStreet}
               onChange={(v) => updateField('businessStreet', v)}
-              required
-              icon={<MapPin className="w-4 h-4" />}
+              icon={<MapPin size={16} />}
             />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <Field
                 label="City"
+                placeholder="e.g., New York"
+                required
                 value={details.businessCity}
                 onChange={(v) => updateField('businessCity', v)}
-                required
+                icon={<MapPin size={16} />}
               />
               <Field
                 label="State"
+                placeholder="e.g., NY"
+                required
                 value={details.businessState}
                 onChange={(v) => updateField('businessState', v)}
-                required
-              />
-              <Field
-                label="Postal Code"
-                value={details.businessPostalCode}
-                onChange={(v) => updateField('businessPostalCode', v)}
-                required
+                icon={<MapPin size={16} />}
               />
             </div>
-            <Field
-              label="Country"
-              value={details.businessCountry}
-              onChange={(v) => updateField('businessCountry', v)}
-              required
-            />
+            <div className="grid grid-cols-2 gap-4">
+              <Field
+                label="Postal Code"
+                placeholder="e.g., 10001"
+                required
+                value={details.businessPostalCode}
+                onChange={(v) => updateField('businessPostalCode', v)}
+                icon={<MapPin size={16} />}
+              />
+              <Field
+                label="Country"
+                placeholder="e.g., United States"
+                required
+                value={details.businessCountry}
+                onChange={(v) => updateField('businessCountry', v)}
+                icon={<MapPin size={16} />}
+              />
+            </div>
           </div>
         );
 
-      case 2: // Target Customers
+      case 3: // Marketing & Sales
         return (
-          <div className="space-y-4">
+          <div className="grid gap-4">
             <Field
-              label="Business Niche"
-              placeholder="e.g., Outdoor Equipment, Electronics, Home Decor"
+              label="Niche/Industry"
+              placeholder="e.g., Home Decor, Electronics, Fashion"
+              required
               value={details.niche}
               onChange={(v) => updateField('niche', v)}
-              required
-              icon={<Tag className="w-4 h-4" />}
+              icon={<Tag size={16} />}
             />
             <Field
               label="Target Customer Segment"
-              placeholder="e.g., Outdoor enthusiasts, Tech professionals, Homeowners"
+              placeholder="e.g., Young professionals, Families, Seniors"
               value={details.targetCustomerSegment}
               onChange={(v) => updateField('targetCustomerSegment', v)}
-              required
-              icon={<Users className="w-4 h-4" />}
+              icon={<Users size={16} />}
             />
-          </div>
-        );
-
-      case 3: // Sales Estimates
-        return (
-          <div className="space-y-4">
             <Field
               label="Estimated Annual Sales"
+              placeholder="e.g., $700,000"
               value={details.estimatedSales}
               onChange={(v) => updateField('estimatedSales', v)}
-              required
-              icon={<DollarSign className="w-4 h-4" />}
+              icon={<DollarSign size={16} />}
             />
-          </div>
-        );
-
-      case 4: // Team Size
-        return (
-          <div className="space-y-4">
             <Field
               label="Number of Employees"
+              placeholder="e.g., 5-10"
               value={details.employees}
               onChange={(v) => updateField('employees', v)}
-              required
-              icon={<Users className="w-4 h-4" />}
+              icon={<Users size={16} />}
             />
           </div>
         );
 
-      case 5: // Legal Documents
+      case 4: // Legal & Compliance
         return (
-          <div className="space-y-4">
+          <div className="grid gap-4">
             <Field
               label="Resale Certificate Number"
+              placeholder="e.g., RC-123456"
               value={details.resaleCertificate}
               onChange={(v) => updateField('resaleCertificate', v)}
-              icon={<FileText className="w-4 h-4" />}
+              icon={<FileText size={16} />}
             />
             <Field
               label="Business License Number"
+              placeholder="e.g., BL-789012"
               value={details.businessLicense}
               onChange={(v) => updateField('businessLicense', v)}
-              icon={<FileText className="w-4 h-4" />}
+              icon={<FileText size={16} />}
             />
           </div>
         );
 
-      case 6: // Supplier Info
+      case 5: // Supplier Information
         return (
-          <div className="space-y-4">
+          <div className="grid gap-4">
             <Field
-              label="Supplier Name"
-              placeholder="e.g., Brand Name you want to become a dealer for"
+              label="Supplier/Brand Name"
+              placeholder="e.g., ABC Manufacturing"
+              required
               value={details.supplierName}
               onChange={(v) => updateField('supplierName', v)}
-              required
-              icon={<Store className="w-4 h-4" />}
+              icon={<Briefcase size={16} />}
             />
-          </div>
-        );
-
-      case 7: // Dealer Form
-        return (
-          <div className="space-y-4">
             <Field
               label="Dealer Application Form URL"
-              placeholder="https://supplier.com/dealer-application"
+              placeholder="e.g., https://supplier.com/dealer-application"
               value={details.dealerFormUrl}
               onChange={(v) => updateField('dealerFormUrl', v)}
-              required
-              icon={<Globe className="w-4 h-4" />}
+              icon={<Globe size={16} />}
             />
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
+                <FileText size={16} />
+                Dealer Form Fields (Optional)
+              </label>
+              <textarea
+                placeholder="Paste any specific form fields or requirements here..."
+                value={details.dealerFormFields}
+                onChange={(e) => updateField('dealerFormFields', e.target.value)}
+                rows={4}
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FACC15] focus:border-transparent"
+              />
+            </div>
           </div>
         );
 
-      case 8: // Review & Generate
+      case 6: // Review & Generate
         return (
           <div className="space-y-6">
-            <div className="bg-gray-800 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold text-white mb-4">Review Your Information</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span className="text-gray-400">Name:</span> {details.contactFirstName} {details.contactLastName}
-                </div>
-                <div>
-                  <span className="text-gray-400">Email:</span> {details.contactEmail}
-                </div>
-                <div>
-                  <span className="text-gray-400">Phone:</span> {details.contactPhone}
-                </div>
-                <div>
-                  <span className="text-gray-400">Business:</span> {details.storeName}
-                </div>
-                <div>
-                  <span className="text-gray-400">Niche:</span> {details.niche}
-                </div>
-                <div>
-                  <span className="text-gray-400">Supplier:</span> {details.supplierName}
-                </div>
+            <div className="bg-white/10 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-[#FACC15] mb-4">Review Your Information</h3>
+              <div className="grid gap-3 text-sm">
+                <div><strong>Name:</strong> {details.contactFirstName} {details.contactLastName}</div>
+                <div><strong>Email:</strong> {details.contactEmail}</div>
+                <div><strong>Phone:</strong> {details.contactPhone}</div>
+                <div><strong>Business:</strong> {details.storeName}</div>
+                <div><strong>Niche:</strong> {details.niche}</div>
+                <div><strong>Supplier:</strong> {details.supplierName}</div>
               </div>
             </div>
-
+            
             <button
               onClick={generateTemplate}
               disabled={isGenerating}
-              className="w-full bg-[#FACC15] text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full px-6 py-4 bg-[#FACC15] text-black font-semibold rounded-lg hover:bg-[#e6b812] transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isGenerating ? (
                 <>
@@ -374,25 +407,16 @@ export default function DealerApplication() {
                   Generating Template...
                 </>
               ) : (
-                <>
-                  <FileText className="w-5 h-5" />
-                  Generate Dealer Application Template
-                </>
+                'Generate Dealer Application Template'
               )}
             </button>
 
             {generatedTemplate && (
-              <div className="bg-gray-800 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-white mb-4">Generated Template</h3>
-                <pre className="text-sm text-gray-300 whitespace-pre-wrap overflow-x-auto">
+              <div className="bg-white/10 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-[#FACC15] mb-4">Generated Template</h3>
+                <pre className="text-sm text-gray-300 whitespace-pre-wrap bg-black/20 p-4 rounded-lg overflow-x-auto">
                   {generatedTemplate}
                 </pre>
-                <button
-                  onClick={() => navigator.clipboard.writeText(generatedTemplate)}
-                  className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
-                >
-                  Copy to Clipboard
-                </button>
               </div>
             )}
           </div>
@@ -404,55 +428,45 @@ export default function DealerApplication() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] p-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">
-            AI Dealer Application Assistant
-          </h1>
-          <p className="text-gray-400">
-            Automatically generate dealer application forms and outreach messages
-          </p>
+          <h1 className="text-4xl font-bold text-white mb-2">AI Dealer Application</h1>
+          <p className="text-gray-300">Automatically generate dealer application forms</p>
         </div>
 
         {/* Progress Steps */}
-        <div className="flex justify-center mb-8">
-          <div className="flex items-center space-x-4">
-            {steps.map((step, index) => {
-              const Icon = step.icon;
-              const isActive = index === currentStep;
-              const isCompleted = index < currentStep;
-              
-              return (
-                <div key={index} className="flex items-center">
-                  <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
-                    isActive 
-                      ? 'border-[#FACC15] bg-[#FACC15] text-black' 
-                      : isCompleted 
-                        ? 'border-green-500 bg-green-500 text-white'
-                        : 'border-gray-600 text-gray-400'
-                  }`}>
-                    {isCompleted ? (
-                      <CheckCircle className="w-5 h-5" />
-                    ) : (
-                      <Icon className="w-5 h-5" />
-                    )}
-                  </div>
-                  {index < steps.length - 1 && (
-                    <div className={`w-8 h-0.5 ${
-                      isCompleted ? 'bg-green-500' : 'bg-gray-600'
-                    }`} />
-                  )}
+        <div className="flex items-center justify-center mb-8">
+          {steps.map((step, index) => {
+            const Icon = step.icon;
+            const isCompleted = index < currentStep;
+            const isCurrent = index === currentStep;
+            
+            return (
+              <div key={step.id} className="flex items-center">
+                <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
+                  isCompleted 
+                    ? 'bg-[#FACC15] border-[#FACC15] text-black' 
+                    : isCurrent 
+                    ? 'border-[#FACC15] text-[#FACC15]' 
+                    : 'border-gray-600 text-gray-600'
+                }`}>
+                  {isCompleted ? <CheckCircle size={20} /> : <Icon size={20} />}
                 </div>
-              );
-            })}
-          </div>
+                {index < steps.length - 1 && (
+                  <div className={`w-16 h-0.5 mx-2 ${
+                    isCompleted ? 'bg-[#FACC15]' : 'bg-gray-600'
+                  }`} />
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {/* Step Content */}
-        <div className="bg-gray-800 rounded-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-white mb-6">
+        <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-8 mb-8">
+          <h2 className="text-2xl font-semibold text-white mb-6">
             {steps[currentStep].title}
           </h2>
           {renderStep()}
@@ -463,27 +477,25 @@ export default function DealerApplication() {
           <button
             onClick={prevStep}
             disabled={currentStep === 0}
-            className="flex items-center gap-2 px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-3 bg-white/10 text-white rounded-lg hover:bg-white/20 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft size={20} />
             Previous
           </button>
-
+          
           {currentStep < steps.length - 1 ? (
             <button
               onClick={nextStep}
-              className="flex items-center gap-2 px-6 py-3 bg-[#FACC15] text-black rounded-lg hover:bg-yellow-400 transition-colors font-semibold"
+              className="px-6 py-3 bg-[#FACC15] text-black rounded-lg hover:bg-[#e6b812] transition flex items-center gap-2"
             >
               Next
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight size={20} />
             </button>
-          ) : (
-            <div className="text-sm text-gray-400">
-              Complete all steps to generate your template
-            </div>
-          )}
+          ) : null}
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default DealerApplication;
