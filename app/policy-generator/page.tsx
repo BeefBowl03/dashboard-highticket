@@ -24,7 +24,115 @@ export default function PolicyGenerator() {
     setIsLoading(true);
     // Simulate API call
     setTimeout(() => {
-      setGeneratedPolicy(`Generated ${policyTypes.find(p => p.id === selectedPolicy)?.name} content...`);
+      const policyType = policyTypes.find(p => p.id === selectedPolicy);
+      let content = '';
+      
+      switch (selectedPolicy) {
+        case 'privacy':
+          content = `PRIVACY POLICY
+
+Last updated: ${new Date().toLocaleDateString()}
+
+1. INFORMATION WE COLLECT
+We collect information you provide directly to us, such as when you create an account, make a purchase, or contact us for support.
+
+2. HOW WE USE YOUR INFORMATION
+We use the information we collect to provide, maintain, and improve our services, process transactions, and communicate with you.
+
+3. INFORMATION SHARING
+We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy.
+
+4. DATA SECURITY
+We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.
+
+5. CONTACT US
+If you have any questions about this Privacy Policy, please contact us at privacy@yourcompany.com.`;
+          break;
+        case 'terms':
+          content = `TERMS OF SERVICE
+
+Last updated: ${new Date().toLocaleDateString()}
+
+1. ACCEPTANCE OF TERMS
+By accessing and using our service, you accept and agree to be bound by the terms and provision of this agreement.
+
+2. USE LICENSE
+Permission is granted to temporarily download one copy of the materials on our website for personal, non-commercial transitory viewing only.
+
+3. DISCLAIMER
+The materials on our website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim all other warranties.
+
+4. LIMITATIONS
+In no event shall our company or its suppliers be liable for any damages arising out of the use or inability to use the materials on our website.
+
+5. REVISIONS
+We may revise these terms of service at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms.`;
+          break;
+        case 'refund':
+          content = `REFUND POLICY
+
+Last updated: ${new Date().toLocaleDateString()}
+
+1. REFUND ELIGIBILITY
+We offer refunds for products returned within 30 days of purchase, provided they are in original condition.
+
+2. REFUND PROCESS
+To request a refund, please contact our customer service team with your order number and reason for return.
+
+3. REFUND TIMING
+Refunds will be processed within 5-10 business days after we receive and inspect the returned item.
+
+4. NON-REFUNDABLE ITEMS
+Custom orders, digital products, and items marked as final sale are not eligible for refunds.
+
+5. RETURN SHIPPING
+Customers are responsible for return shipping costs unless the return is due to our error.`;
+          break;
+        case 'shipping':
+          content = `SHIPPING POLICY
+
+Last updated: ${new Date().toLocaleDateString()}
+
+1. SHIPPING METHODS
+We offer standard shipping (5-7 business days) and express shipping (2-3 business days).
+
+2. SHIPPING COSTS
+Shipping costs are calculated at checkout based on destination and package weight.
+
+3. PROCESSING TIME
+Orders are processed within 1-2 business days. Processing time does not include weekends or holidays.
+
+4. INTERNATIONAL SHIPPING
+We ship to most countries worldwide. International orders may be subject to customs duties and taxes.
+
+5. TRACKING
+Once your order ships, you will receive a tracking number via email to monitor your package's progress.`;
+          break;
+        case 'disclaimer':
+          content = `DISCLAIMER
+
+Last updated: ${new Date().toLocaleDateString()}
+
+1. GENERAL DISCLAIMER
+The information on this website is provided on an "as is" basis. To the fullest extent permitted by law, we exclude all representations, warranties, and conditions.
+
+2. NO WARRANTIES
+We make no representations or warranties in relation to this website or the information and materials provided on this website.
+
+3. LIMITATION OF LIABILITY
+We will not be liable to you in relation to the contents of, or use of, or otherwise in connection with, this website.
+
+4. EXCEPTIONS
+Nothing in this disclaimer will exclude or limit any warranty implied by law that it would be unlawful to exclude or limit.
+
+5. REASONABLENESS
+By using this website, you agree that the exclusions and limitations of liability set out in this website disclaimer are reasonable.`;
+          break;
+        default:
+          content = `Generated ${policyType?.name} content...`;
+      }
+      
+      setGeneratedPolicy(content);
       setIsLoading(false);
     }, 2000);
   };
