@@ -2,10 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import axios from 'axios';
 
-// Initialize OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Initialize OpenAI (only if API key is available)
+let openai: OpenAI | null = null;
+if (process.env.OPENAI_API_KEY) {
+  openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 // Name.com API function
 const checkDomainAvailability = async (domain: string) => {
@@ -42,27 +45,29 @@ export async function POST(request: NextRequest) {
     
     console.log(`🚀 Generating domains for niche: "${niche}"`);
     
-    // Generate domains using OpenAI
+    // Generate domains using OpenAI (if available)
     let domains: string[] = [];
-    try {
-      const response = await openai.chat.completions.create({
-        model: "gpt-4",
-        messages: [{ 
-          role: "user", 
-          content: `Generate 10 premium domain names for a high-ticket dropshipping store in the "${niche}" niche. Return only domain names, one per line, without explanations.` 
-        }],
-        max_tokens: 200,
-        temperature: 0.8
-      });
-      
-      domains = response.choices[0].message.content
-        ?.split('\n')
-        .map(d => d.trim())
-        .filter(d => d && !d.includes('http'))
-        .map(d => d.toLowerCase().replace(/[^a-z0-9]/g, '') + '.com')
-        .slice(0, 10) || [];
-    } catch (error) {
-      console.error('OpenAI error:', error);
+    if (openai) {
+      try {
+        const response = await openai.chat.completions.create({
+          model: "gpt-4",
+          messages: [{ 
+            role: "user", 
+            content: `Generate 10 premium domain names for a high-ticket dropshipping store in the "${niche}" niche. Return only domain names, one per line, without explanations.` 
+          }],
+          max_tokens: 200,
+          temperature: 0.8
+        });
+        
+        domains = response.choices[0].message.content
+          ?.split('\n')
+          .map(d => d.trim())
+          .filter(d => d && !d.includes('http'))
+          .map(d => d.toLowerCase().replace(/[^a-z0-9]/g, '') + '.com')
+          .slice(0, 10) || [];
+      } catch (error) {
+        console.error('OpenAI error:', error);
+      }
     }
     
     // Fallback domains if OpenAI fails
