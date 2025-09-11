@@ -115,7 +115,7 @@ const DomainGenerator: React.FC = () => {
           <div className="space-y-8">
             {/* Popular Stores */}
             <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
-              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-yellow-500 mb-6 flex items-center gap-2">
                 <Globe size={24} className="text-yellow-500" />
                 Popular Stores in Your Niche
               </h3>
@@ -126,7 +126,7 @@ const DomainGenerator: React.FC = () => {
                       href={competitor.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white hover:text-yellow-500 font-medium block text-lg"
+                      className="text-yellow-500 hover:text-yellow-400 font-medium block text-lg"
                     >
                       {competitor.name}
                     </a>
