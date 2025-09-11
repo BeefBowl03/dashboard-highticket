@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Globe, Search, Star, List, Plus, AlertTriangle } from 'lucide-react';
 import { generateDomainsForNiche, generateMoreDomains as generateMoreDomainsAPI, DomainGeneratorResponse } from '../api/domainGenerator';
+import './DomainGenerator.css';
 
 // Using interfaces from the API file
 
@@ -72,27 +73,24 @@ const DomainGenerator: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="main">
+      <div className="container">
         {/* Search Section */}
-        <div className="mb-12">
-          <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700">
-            <h2 className="text-3xl font-bold text-yellow-500 mb-6 text-center">
-              Enter Your Niche
-            </h2>
-            <div className="flex gap-4 max-w-3xl mx-auto">
+        <div className="search-section">
+          <div className="search-card">
+            <h2>Enter Your Niche</h2>
+            <div className="input-group">
               <input
                 type="text"
                 value={niche}
                 onChange={(e) => setNiche(e.target.value)}
                 placeholder="backyard"
-                className="flex-1 p-4 bg-gray-700 border border-yellow-500 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-lg"
                 onKeyPress={(e) => e.key === 'Enter' && generateDomains()}
               />
               <button
                 onClick={generateDomains}
                 disabled={loading}
-                className="px-8 py-4 bg-yellow-500 text-black font-semibold rounded-xl hover:bg-yellow-400 disabled:opacity-50 flex items-center gap-2 text-lg"
+                className="btn-primary"
               >
                 <Search size={20} />
                 Generate Domains
@@ -103,109 +101,104 @@ const DomainGenerator: React.FC = () => {
 
         {/* Loading Section */}
         {loading && (
-          <div className="text-center py-16">
-            <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-[#c19d44] mb-4"></div>
-            <h3 className="text-xl font-semibold text-[#c19d44] mb-2">Generating Domains...</h3>
-            <p className="text-[#ffffff80]">Finding the perfect domains for your high-ticket dropshipping store</p>
+          <div className="loading-section">
+            <div className="loading-card">
+              <div className="spinner"></div>
+              <h3>Generating Domains...</h3>
+              <p>Finding the perfect domains for your high-ticket dropshipping store</p>
+            </div>
           </div>
         )}
 
         {/* Results Section */}
         {results && !loading && (
-          <div className="space-y-8">
+          <div className="results-section">
             {/* Popular Stores */}
-            <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
-              <h3 className="text-xl font-bold text-yellow-500 mb-6 flex items-center gap-2">
-                <Globe size={24} className="text-yellow-500" />
+            <div>
+              <h3>
+                <Globe size={24} />
                 Popular Stores in Your Niche
               </h3>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="competitors-list">
                 {results.competitors.slice(0, 4).map((competitor, index) => (
-                  <div key={index} className="bg-gray-700 border border-gray-600 rounded-lg p-4 hover:border-yellow-500 transition-colors">
+                  <div key={index} className="competitor-item">
                     <a
                       href={competitor.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-yellow-500 hover:text-yellow-400 font-medium block text-lg"
                     >
                       {competitor.name}
                     </a>
-                    <div className="text-gray-400 text-sm mt-1">{competitor.domain}</div>
+                    <div className="domain">{competitor.domain}</div>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Domain Patterns */}
-            <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
-              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <Search size={24} className="text-yellow-500" />
+            <div className="patterns-found-card">
+              <h3>
+                <Search size={24} />
                 Domain Patterns Found:
               </h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center border-b border-gray-600 pb-3">
-                  <span className="text-yellow-500 font-medium">Average Length:</span>
-                  <span className="text-white font-medium">{results.patterns.patterns?.averageLength || 12} characters</span>
+              <div className="patterns-found-content">
+                <div className="pattern-row">
+                  <span className="pattern-label">Average Length:</span>
+                  <span className="pattern-value">{results.patterns.patterns?.averageLength || 15} characters</span>
                 </div>
-                <div className="flex justify-between items-center border-b border-gray-600 pb-3">
-                  <span className="text-yellow-500 font-medium">Length Range:</span>
-                  <span className="text-white font-medium">{results.patterns.recommendations?.optimalLength || '12-20 characters'}</span>
+                <div className="pattern-row">
+                  <span className="pattern-label">Length Range:</span>
+                  <span className="pattern-value">{results.patterns.recommendations?.optimalLength || '15-25 characters'}</span>
                 </div>
-                <div className="flex justify-between items-center border-b border-gray-600 pb-3">
-                  <span className="text-yellow-500 font-medium">Most Common Word Count:</span>
-                  <span className="text-white font-medium">{results.patterns.patterns?.wordCount || '2-3 words'}</span>
+                <div className="pattern-row">
+                  <span className="pattern-label">Most Common Word Count:</span>
+                  <span className="pattern-value">{results.patterns.patterns?.wordCount || '2-3 words'}</span>
                 </div>
-                <div className="border-b border-gray-600 pb-3">
-                  <span className="text-yellow-500 font-medium">Niche Keywords:</span>
-                  <div className="text-white mt-2">
-                    {results.patterns.nicheKeywords?.join(', ') || 'backyard, yard, patio, deck, outdoor, garden space, courtyard'}
-                  </div>
+                <div className="pattern-row">
+                  <span className="pattern-label">Niche Keywords:</span>
+                  <span className="pattern-value">{results.patterns.nicheKeywords?.join(', ') || 'backyard, yard, patio, deck, outdoor, garden space, courtyard'}</span>
                 </div>
-                <div className="border-b border-gray-600 pb-3">
-                  <span className="text-yellow-500 font-medium">Structure Patterns:</span>
-                  <div className="text-white mt-2">
-                    prefix + niche keyword + suffix | niche keyword + descriptive word
-                  </div>
+                <div className="pattern-row">
+                  <span className="pattern-label">Structure Patterns:</span>
+                  <span className="pattern-value">prefix + niche keyword + suffix | niche keyword + descriptive word</span>
                 </div>
-                <div>
-                  <span className="text-yellow-500 font-medium">Brand Positioning:</span>
-                  <div className="text-white mt-2">
-                    {results.patterns.recommendations?.brandPositioning || 'Domains should convey elegance, quality, and exclusivity to attract high-ticket customers.'}
-                  </div>
+                <div className="pattern-row">
+                  <span className="pattern-label">Brand Positioning:</span>
+                  <span className="pattern-value">{results.patterns.recommendations?.brandPositioning || 'Domains should convey sophistication, quality, and a sense of exclusivity to attract high-ticket customers.'}</span>
                 </div>
               </div>
             </div>
 
             {/* Top Recommendation */}
-            <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
-              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <Star size={24} className="text-yellow-500" />
+            <div>
+              <h3>
+                <Star size={24} />
                 Our Top Recommendation
               </h3>
-              <div className="bg-yellow-500 rounded-lg p-8 text-center shadow-lg">
-                <div className="text-3xl font-bold text-black mb-3">{results.recommendation.domain}</div>
-                <div className="text-xl text-black">${results.recommendation.price}/year</div>
+              <div className="domain-recommendation">
+                <div className="domain-name">{results.recommendation.domain}</div>
+                <div className="domain-price">${results.recommendation.price}/year</div>
               </div>
             </div>
 
             {/* Alternative Options */}
-            <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
-              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <List size={24} className="text-yellow-500" />
+            <div>
+              <h3>
+                <List size={24} />
                 Alternative Options
               </h3>
-              <div className="space-y-4 mb-8">
+              <div>
                 {results.alternatives.map((domain, index) => (
-                  <div key={index} className="bg-gray-700 border border-gray-600 rounded-lg p-4 flex justify-between items-center hover:border-yellow-500 transition-colors">
-                    <div className="text-white font-medium text-lg">{domain.domain}</div>
-                    <div className="text-gray-400">${domain.price}/year</div>
+                  <div key={index} className="domain-item">
+                    <div className="domain-name">{domain.domain}</div>
+                    <div className="domain-price">${domain.price}/year</div>
                   </div>
                 ))}
               </div>
               <button
                 onClick={generateMoreDomains}
                 disabled={loading}
-                className="w-full px-6 py-4 bg-gray-700 border border-gray-600 text-white rounded-lg hover:bg-gray-600 hover:border-yellow-500 disabled:opacity-50 flex items-center justify-center gap-2 transition-all text-lg"
+                className="btn-secondary"
               >
                 <Plus size={20} />
                 + Generate 5 More Options
@@ -216,18 +209,17 @@ const DomainGenerator: React.FC = () => {
 
         {/* Error Section */}
         {error && !loading && (
-          <div className="text-center py-16">
-            <div className="bg-transparent rounded-2xl p-8 border border-[#333333] max-w-md mx-auto">
-              <AlertTriangle size={48} className="text-red-500 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-red-500 mb-4">Oops! Something went wrong</h3>
-              <p className="text-[#ffffff80] mb-6">{error}</p>
-              <button
-                onClick={resetAndRetry}
-                className="px-6 py-3 bg-[#c19d44] text-[#080808] font-semibold rounded-lg hover:bg-[#a88a3b]"
-              >
-                Try Again
-              </button>
-            </div>
+          <div className="error-card">
+            <AlertTriangle size={48} />
+            <h3>Oops! Something went wrong</h3>
+            <p>{error}</p>
+            <button
+              onClick={resetAndRetry}
+              className="btn-primary"
+              id="retryBtn"
+            >
+              Try Again
+            </button>
           </div>
         )}
       </div>
