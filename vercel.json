@@ -1,6 +1,35 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "framework": "nextjs"
+  "builds": [
+    {
+      "src": "server-original.js",
+      "use": "@vercel/node",
+      "config": { 
+        "includeFiles": [
+          "competitor-finder-original.js", 
+          "namecom-api-original.js", 
+          "domain-databases-original.js",
+          "competitors.json",
+          "domains.db"
+        ] 
+      }
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server-original.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
 }
