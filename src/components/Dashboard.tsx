@@ -14,9 +14,6 @@ interface ToolCard {
   title: string;
   description: string;
   icon: React.ReactNode;
-  status: 'Active' | 'Ready to Use';
-  lastUsed: string;
-  conversations: number;
   buttonText: string;
   buttonType: 'primary' | 'secondary';
 }
@@ -30,9 +27,6 @@ const Dashboard: React.FC = () => {
       title: 'AI Dealer Application Assistant',
       description: 'Automatically generate dealer application forms and outreach messages for supplier partnerships...',
       icon: <Briefcase size={32} />,
-      status: 'Ready to Use',
-      lastUsed: 'Never used',
-      conversations: 0,
       buttonText: 'Start Application',
       buttonType: 'primary'
     },
@@ -41,9 +35,6 @@ const Dashboard: React.FC = () => {
       title: 'AI Cold Email Generator',
       description: 'Generate professional cold emails for supplier partnerships and B2B outreach...',
       icon: <Mail size={32} />,
-      status: 'Ready to Use',
-      lastUsed: 'Never used',
-      conversations: 0,
       buttonText: 'Generate Emails',
       buttonType: 'primary'
     },
@@ -52,9 +43,6 @@ const Dashboard: React.FC = () => {
       title: 'AI Logo Generator',
       description: 'Create professional logos powered by AI with transparent backgrounds and modern designs...',
       icon: <Sparkles size={32} />,
-      status: 'Ready to Use',
-      lastUsed: 'Never used',
-      conversations: 0,
       buttonText: 'Generate Logo',
       buttonType: 'primary'
     },
@@ -63,9 +51,6 @@ const Dashboard: React.FC = () => {
       title: 'Store Policy Generator',
       description: 'Generate legal policies for your store including Privacy Policy, Terms of Service, and more.',
       icon: <FileText size={32} />,
-      status: 'Ready to Use',
-      lastUsed: 'Never used',
-      conversations: 0,
       buttonText: 'Generate Policies',
       buttonType: 'primary'
     },
@@ -74,9 +59,6 @@ const Dashboard: React.FC = () => {
       title: 'Domain Generator',
       description: 'Generate premium domain names and analyze competitor branding using AI.',
       icon: <Globe size={32} />,
-      status: 'Ready to Use',
-      lastUsed: 'Never used',
-      conversations: 0,
       buttonText: 'Start Generating',
       buttonType: 'primary'
     }
@@ -119,17 +101,9 @@ const Dashboard: React.FC = () => {
                   <div className="tool-icon">
                     {tool.icon}
                   </div>
-                  <div className={`tool-status ${tool.status === 'Active' ? 'active' : 'ready'}`}>
-                    {tool.status}
-                  </div>
                 </div>
                 
                 <div className="tool-content">
-                  <div className="tool-meta">
-                    <span className="tool-last-used">• {tool.lastUsed}</span>
-                    <span className="tool-conversations">{tool.conversations} conversations</span>
-                  </div>
-                  
                   <h3 className="tool-title">{tool.title}</h3>
                   <p className="tool-description">{tool.description}</p>
                 </div>

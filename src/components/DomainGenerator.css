@@ -53,6 +53,28 @@ body {
     padding-bottom: 3rem;
 }
 
+/* Header with Logo */
+.content-header {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.logo-svg {
+    height: 60px;
+    width: auto;
+    max-width: 400px;
+    filter: brightness(1);
+}
+
 /* Search Section */
 .search-section {
     margin-bottom: 2rem;
@@ -103,44 +125,70 @@ body {
 }
 
 .btn-primary, .btn-secondary {
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    border: none;
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
+    justify-content: center;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-    color: #000;
+    background: linear-gradient(189deg, #aa813c, #fdf3ad 52%, #d5b356 80%, #c19d44);
+    background-size: 300% 300%;
+    color: #080808;
     font-weight: 700;
+    animation: gradientShift 3s ease infinite;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(170, 129, 60, 0.3);
+    font-family: Aeonik, Arial, sans-serif;
+    letter-spacing: -0.12px;
 }
 
 .btn-primary:hover {
+    background: linear-gradient(189deg, #c19d44, #fdf3ad 52%, #aa813c 80%, #d5b356);
+    background-size: 300% 300%;
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
-    background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
+    box-shadow: 0 8px 24px rgba(170, 129, 60, 0.5);
+    animation: gradientShift 2s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .btn-secondary {
     background: transparent;
-    color: #ffd700;
-    border: 2px solid #ffd700;
+    color: #c19d44;
+    border: 2px solid #c19d44;
+    font-weight: 600;
+    border-radius: 12px;
+    font-family: Aeonik, Arial, sans-serif;
+    letter-spacing: -0.12px;
     width: 100%;
     justify-content: center;
     margin-top: 1rem;
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 215, 0, 0.1);
-    border-color: #ffed4e;
-    color: #ffed4e;
+    background: rgba(193, 157, 68, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(193, 157, 68, 0.3);
 }
 
 /* Loading Section */
@@ -615,10 +663,16 @@ body {
         gap: 1rem;
     }
     
+    .input-group input {
+        font-size: 16px; /* Prevents zoom on iOS */
+        min-height: 48px; /* Touch-friendly */
+    }
+    
     .btn-primary {
         padding: 1.2rem 2rem;
         font-size: 1.1rem;
         justify-content: center;
+        min-height: 48px; /* Touch-friendly */
     }
     
     .patterns-grid,
@@ -634,6 +688,7 @@ body {
     
     .competitor-item {
         padding: 1rem;
+        min-height: 48px; /* Touch-friendly */
     }
     
     .domain-item {
@@ -641,6 +696,7 @@ body {
         gap: 1rem;
         text-align: center;
         padding: 1.2rem;
+        min-height: 48px; /* Touch-friendly */
     }
     
     .domain-recommendation {
@@ -654,6 +710,27 @@ body {
     .results-section > div {
         padding: 1.5rem;
         border-radius: 15px;
+    }
+    
+    /* Pattern rows stack on mobile */
+    .pattern-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+    
+    .pattern-label {
+        min-width: auto;
+        margin-bottom: 0.25rem;
+    }
+    
+    /* Logo responsive */
+    .logo-svg {
+        height: 50px;
+        max-width: 300px;
+    }
+    
+    .main-logo {
+        margin-bottom: 30px;
     }
 }
 
@@ -682,12 +759,13 @@ body {
     
     .pattern-row {
         padding: 0.4rem 0;
-        flex-direction: column;
+        grid-template-columns: 1fr;
         gap: 0.25rem;
     }
     
     .pattern-label {
         min-width: auto;
+        margin-bottom: 0.25rem;
     }
     
     .header-content h1 {
@@ -715,16 +793,22 @@ body {
         margin-bottom: 1rem;
     }
     
+    .input-group {
+        gap: 0.75rem;
+    }
+    
     .input-group input {
         padding: 1rem;
-        font-size: 0.9rem;
+        font-size: 16px; /* Prevents zoom on iOS */
         border-radius: 10px;
+        min-height: 48px; /* Touch-friendly */
     }
     
     .btn-primary {
         padding: 1rem 1.5rem;
         font-size: 1rem;
         border-radius: 10px;
+        min-height: 48px; /* Touch-friendly */
     }
     
     .results-section > div {
@@ -738,9 +822,15 @@ body {
         margin-bottom: 1rem;
     }
     
+    .competitors-list {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
     .competitor-item {
         padding: 0.75rem;
         border-radius: 8px;
+        min-height: 48px; /* Touch-friendly */
     }
     
     .competitor-item a {
@@ -777,6 +867,7 @@ body {
     .domain-item {
         padding: 1rem 0.75rem;
         border-radius: 10px;
+        min-height: 48px; /* Touch-friendly */
     }
     
     .domain-item .domain-name {
@@ -822,6 +913,22 @@ body {
     
     .error-card h3 {
         font-size: 1.3rem;
+    }
+    
+    /* Ensure buttons are touch-friendly */
+    .btn-secondary {
+        min-height: 48px;
+        padding: 1rem 1.5rem;
+    }
+    
+    /* Logo mobile */
+    .logo-svg {
+        height: 40px;
+        max-width: 250px;
+    }
+    
+    .main-logo {
+        margin-bottom: 20px;
     }
 }
 
@@ -889,6 +996,34 @@ body {
     .domain-item:hover {
         transform: none;
         box-shadow: none;
+    }
+}
+
+/* Additional mobile optimizations */
+@media (max-width: 480px) {
+    /* Make sure input placeholder text is readable */
+    .input-group input::placeholder {
+        font-size: 14px;
+        opacity: 0.7;
+    }
+    
+    /* Ensure text doesn't overflow on small screens */
+    .pattern-value {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    /* Make domain names wrap properly */
+    .domain-name {
+        word-break: break-word;
+        hyphens: auto;
+    }
+    
+    /* Ensure buttons don't get cut off */
+    .btn-primary, .btn-secondary {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 

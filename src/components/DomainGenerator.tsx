@@ -75,6 +75,17 @@ const DomainGenerator: React.FC = () => {
   return (
     <div className="main">
       <div className="container">
+        {/* Header with Logo */}
+        <div className="content-header">
+          <div className="main-logo">
+            <img 
+              src="https://cdn.prod.website-files.com/67692e83aa3faae2c7985fcc/679934bc5b34b807e6cac177_highticket-logo-full-white.svg" 
+              alt="HighTicket.io" 
+              className="logo-svg"
+            />
+          </div>
+        </div>
+
         {/* Search Section */}
         <div className="search-section">
           <div className="search-card">
@@ -84,7 +95,7 @@ const DomainGenerator: React.FC = () => {
                 type="text"
                 value={niche}
                 onChange={(e) => setNiche(e.target.value)}
-                placeholder="backyard"
+                placeholder="Enter your niche (e.g., backyard furniture, luxury watches, fitness equipment)"
                 onKeyPress={(e) => e.key === 'Enter' && generateDomains()}
               />
               <button
