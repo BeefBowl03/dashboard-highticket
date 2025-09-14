@@ -107,7 +107,7 @@ const LogoGenerator = () => {
         {/* Step 1: Input */}
         {!generatedLogo ? (
           <>
-            <h1 className="text-2xl font-bold text-yellow-500 mb-2">
+            <h1 className="text-2xl font-bold text-white-500 mb-2">
               What is your brand name?
             </h1>
             <p className="text-gray-400 mb-6">

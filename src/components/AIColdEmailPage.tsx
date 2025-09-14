@@ -101,7 +101,7 @@ ${data.contactFirstName}`,
             className="back-button"
           >
             <ArrowLeft size={20} />
-            Back to Dashboard
+            <span className="back-button-text">Back to Dashboard</span>
           </button>
           <div className="main-logo">
             <img 

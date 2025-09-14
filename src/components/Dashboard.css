@@ -276,13 +276,20 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 40px;
+  width: 100%;
+  overflow: hidden;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .logo-svg {
   height: 60px;
   width: auto;
-  max-width: 400px;
+  max-width: 100%;
   filter: brightness(1);
+  display: block;
+  object-fit: contain;
+  visibility: visible;
 }
 
 /* Back Button */
@@ -307,6 +314,21 @@
   color: #c19d44;
 }
 
+.back-button-text {
+  display: inline;
+}
+
+@media (max-width: 768px) {
+  .back-button-text {
+    display: none;
+  }
+  
+  .back-button {
+    padding: 12px;
+    gap: 0;
+  }
+}
+
 /* Tool Content Styling */
 .tool-content-wrapper {
   max-width: 800px;
@@ -317,9 +339,9 @@
 /* Tools Section */
 .tools-section h2 {
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 800;
   margin: 0 0 24px 0;
-  color: #D4AF37;
+  color: #c19d44;
   text-align: center;
 }
 
@@ -431,6 +453,7 @@
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   letter-spacing: -0.096px;
@@ -577,6 +600,23 @@
     height: auto;
     min-height: 240px;
   }
+  
+  /* Tablet logo responsiveness */
+  .logo-svg {
+    height: 50px;
+    max-width: 100%;
+    display: block;
+    object-fit: contain;
+    visibility: visible;
+  }
+  
+  .main-logo {
+    margin-bottom: 30px;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
 }
 
 @media (max-width: 480px) {
@@ -590,5 +630,54 @@
   
   .sidebar {
     width: 260px;
+  }
+  
+  /* Mobile logo responsiveness */
+  .logo-svg {
+    height: 40px;
+    max-width: 100%;
+    display: block;
+    object-fit: contain;
+    visibility: visible;
+  }
+  
+  .main-logo {
+    margin-bottom: 20px;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 320px) {
+  .main-content {
+    padding: 80px 8px 16px 8px;
+  }
+  
+  /* Extra small screens logo responsiveness */
+  .logo-svg {
+    height: 35px;
+    max-width: 100%;
+    display: block;
+    object-fit: contain;
+    visibility: visible;
+  }
+  
+  .main-logo {
+    margin-bottom: 16px;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
+  
+  .tools-grid {
+    gap: 12px;
+  }
+  
+  .tool-card {
+    padding: 20px;
+    min-height: 220px;
   }
 }
