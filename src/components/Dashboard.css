@@ -267,8 +267,9 @@
 .content-header {
   margin-bottom: 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .main-logo {
@@ -306,6 +307,10 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .back-button:hover {

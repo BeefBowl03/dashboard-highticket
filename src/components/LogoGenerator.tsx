@@ -27,6 +27,9 @@ const LogoGenerator = () => {
     setError("");
     setCurrentMode(mode);
     if (mode === "remix") setRemixType(remixKind || null);
+    
+    // Clear previous logo to prevent multiple logos from showing
+    setGeneratedLogo("");
 
     try {
       // Step 1: Check niche if not supplied
@@ -166,11 +169,11 @@ const LogoGenerator = () => {
             <h2 className="text-xl font-bold text-yellow-500 mb-4">
               Your Generated Logo
             </h2>
-            <div className="border border-gray-700 rounded-lg p-6">
+            <div className="border border-gray-700 rounded-lg p-6 flex justify-center items-center">
               <img
                 src={generatedLogo}
                 alt="Generated Logo"
-                className="w-full max-w-md mx-auto"
+                className="max-w-full max-h-96 w-auto h-auto object-contain"
               />
             </div>
 

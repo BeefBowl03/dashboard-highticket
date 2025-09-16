@@ -30,7 +30,7 @@ const PolicyGeneratorPage: React.FC = () => {
         </div>
 
         <div className="tools-section">
-          <h2>Store Policy Generator</h2>
+          <h2 className="text-3xl font-bold text-[#c19d44] mb-4" style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}>Store Policy Generator</h2>
           <p className="text-[#ffffff80] mb-8">Generate legal policies for your store including Privacy Policy, Terms of Service, and more.</p>
         </div>
         

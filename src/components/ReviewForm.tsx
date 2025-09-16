@@ -96,7 +96,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ formData, onBack, onComplete, o
         <button
           type="button"
           onClick={onBack}
-          className="px-6 py-3 text-base font-medium text-text-primary bg-background-elevated border border-border-elevated rounded-lg hover:bg-background-accent hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-background-primary transition-all duration-200 w-full sm:w-auto"
+          className="px-6 py-3 text-base font-medium text-black bg-gradient-to-r from-[#aa813c] to-[#d5b356] border border-transparent rounded-lg hover:from-[#c19d44] hover:to-[#aa813c] focus:outline-none focus:ring-2 focus:ring-[#c19d44] focus:ring-offset-2 focus:ring-offset-[#080808] transition-all duration-200 w-full sm:w-auto shadow-lg hover:shadow-xl hover:scale-105"
+          style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}
         >
           ← Back to Questions
         </button>

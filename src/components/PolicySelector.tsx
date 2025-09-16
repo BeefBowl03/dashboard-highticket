@@ -161,7 +161,8 @@ const PolicySelector: React.FC<PolicySelectorProps> = ({ policyData, onBack }) =
       <div className="mt-4 sm:mt-6 md:mt-8 text-center">
         <button
           onClick={onBack}
-          className="bg-background-elevated text-text-primary px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-lg hover:bg-background-accent hover:border-primary-500 border border-border-elevated transition-all duration-200 font-medium w-full sm:w-auto"
+          className="px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 text-base font-medium text-black bg-gradient-to-r from-[#aa813c] to-[#d5b356] border border-transparent rounded-lg hover:from-[#c19d44] hover:to-[#aa813c] focus:outline-none focus:ring-2 focus:ring-[#c19d44] focus:ring-offset-2 focus:ring-offset-[#080808] transition-all duration-200 w-full sm:w-auto shadow-lg hover:shadow-xl hover:scale-105"
+          style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}
         >
           ← Back to Review
         </button>

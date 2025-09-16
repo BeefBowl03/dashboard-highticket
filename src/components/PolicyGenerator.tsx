@@ -165,13 +165,13 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
                 </p>
               </div>
             )}
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100 mb-3 sm:mb-4">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100 mb-3 sm:mb-4" style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}>
               {questions[currentQuestionIndex]?.question}
             </h2>
             <p className="text-base sm:text-lg text-gray-300 mb-4 sm:mb-6 leading-relaxed">
               {questions[currentQuestionIndex]?.guidance}
             </p>
-            <div className="inline-flex items-center px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-yellow-500 to-yellow-400 text-black shadow-lg">
+            <div className="inline-flex items-center px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-[#aa813c] to-[#d5b356] text-black shadow-lg" style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}>
               {getCurrentGroup()}
             </div>
       </div>
