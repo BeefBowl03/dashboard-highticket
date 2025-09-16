@@ -110,7 +110,7 @@ const LogoGenerator = () => {
         {/* Step 1: Input */}
         {!generatedLogo ? (
           <>
-            <h1 className="text-2xl font-bold text-white-500 mb-2">
+            <h1 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}>
               What is your brand name?
             </h1>
             <p className="text-gray-400 mb-6">
@@ -146,7 +146,8 @@ const LogoGenerator = () => {
             <button
               onClick={() => generateLogo("normal")}
               disabled={!storeName || loading || (needNiche && !userNiche)}
-              className="w-full bg-yellow-500 text-black font-semibold py-3 rounded-lg hover:bg-yellow-600 disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-[#aa813c] to-[#d5b356] text-black font-semibold py-3 rounded-lg hover:from-[#c19d44] hover:to-[#aa813c] disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
+              style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}
             >
               {loading ? (
                 <>
@@ -166,7 +167,7 @@ const LogoGenerator = () => {
         ) : (
           <>
             {/* Step 2: Results */}
-            <h2 className="text-xl font-bold text-yellow-500 mb-4">
+            <h2 className="text-xl font-bold text-[#c19d44] mb-4" style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}>
               Your Generated Logo
             </h2>
             <div className="border border-gray-700 rounded-lg p-6 flex justify-center items-center">
@@ -191,7 +192,8 @@ const LogoGenerator = () => {
               <button
                 onClick={() => generateLogo("remix", undefined, "random")}
                 disabled={loading}
-                className="w-full bg-yellow-500 text-black py-3 rounded-lg hover:bg-yellow-600 disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-[#aa813c] to-[#d5b356] text-black py-3 rounded-lg hover:from-[#c19d44] hover:to-[#aa813c] disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
+                style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}
               >
                 <Wand2 className="w-4 h-4" /> Remix Randomly
               </button>
@@ -199,7 +201,8 @@ const LogoGenerator = () => {
               <button
                 onClick={() => setRemixType("custom")}
                 disabled={loading}
-                className="w-full bg-yellow-500 text-black py-3 rounded-lg hover:bg-yellow-600 disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-[#aa813c] to-[#d5b356] text-black py-3 rounded-lg hover:from-[#c19d44] hover:to-[#aa813c] disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
+                style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}
               >
                 <Wand2 className="w-4 h-4" /> Custom Remix
               </button>
@@ -218,7 +221,8 @@ const LogoGenerator = () => {
                       generateLogo("remix", remixInstructions, "custom")
                     }
                     disabled={loading || !remixInstructions}
-                    className="w-full bg-yellow-500 text-black py-3 rounded-lg hover:bg-yellow-600 disabled:opacity-50 flex items-center justify-center gap-2"
+                    className="w-full bg-gradient-to-r from-[#aa813c] to-[#d5b356] text-black py-3 rounded-lg hover:from-[#c19d44] hover:to-[#aa813c] disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
+                    style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}
                   >
                     <Wand2 className="w-4 h-4" /> Confirm & Generate Custom
                     Remix
@@ -229,7 +233,8 @@ const LogoGenerator = () => {
               {/* 🔄 New logo */}
               <button
                 onClick={resetToNew}
-                className="w-full bg-gray-700 text-white py-3 rounded-lg hover:bg-gray-600 flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-[#aa813c] to-[#d5b356] text-black py-3 rounded-lg hover:from-[#c19d44] hover:to-[#aa813c] flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
+                style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}
               >
                 <RotateCcw className="w-4 h-4" /> Generate New Logo
               </button>
