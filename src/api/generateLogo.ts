@@ -23,29 +23,31 @@ export const generateLogo = async (params: {
     
     console.log('🔑 OpenAI API Key configured:', openaiApiKey ? 'YES' : 'NO');
     
-    // Build custom prompt optimized for DALL-E 3 with transparent background
-    let prompt = `Create a professional logo for "${storeName}". `;
-    
-    if (niche) {
-      prompt += `The business is in the ${niche} industry. `;
-    }
-    
-    prompt += `Clean, modern, minimalist design. Professional color scheme (2-3 colors max). Icon or symbol on the left, company name "${storeName}" on the right. Vector-style with sharp, clean lines. High contrast and readable. Suitable for business cards, websites, and marketing materials. CRITICAL: Generate with a completely transparent background. No solid colors, patterns, or textures behind the logo. The logo should be designed to work on any background color. 
-
-ABSOLUTELY FORBIDDEN: Multiple logo variations, collages, banners, side-by-side comparisons, or any layout showing more than one logo design. Generate EXACTLY ONE single, isolated logo design only. The entire image should contain just one logo centered in the frame. NO multiple versions, NO comparisons, NO additional elements. 1024x1024 pixels, high resolution.`;
+    // 🔹 Base text prompt
+    let prompt = `
+    Create a professional LOGO for a store called "${storeName}".
+    - The niche of this store is: "${niche || "infer from name"}".
+    - Icon LEFT, text "${storeName}" RIGHT, same height as icon.
+    - Style: clean, modern, vector-style with sharp lines.
+    - Colors: choose 1–3 professional colors that suit the niche.
+    - Background: must be 100% TRANSPARENT (real alpha channel).
+    - Do NOT include any white, black, gray, or checkerboard backgrounds.
+    - The output must be a clean PNG with alpha transparency only.
+    - Tightly cropped, sharp, high-resolution, suitable as a real company logo.
+    `;
 
     if (mode === "remix") {
       if (instructions) {
-        prompt += `\n\nModification instructions: ${instructions}`;
+        prompt += `\nFollow these specific remix instructions strictly: ${instructions}`;
       } else {
-        prompt += `\n\nCreate a variation of this logo design with different colors or styling.`;
+        prompt += "\nNow generate a variation of the previous design.";
       }
     }
 
     if (mode === "new") {
-      prompt += `\n\nCreate a completely new logo concept for this business.`;
+      prompt += "\nNow ignore the previous design and create a fresh new concept.";
       if (instructions) {
-        prompt += `\n\nAdditional requirements: ${instructions}`;
+        prompt += `\nAdditionally, follow these specific instructions: ${instructions}`;
       }
     }
 
