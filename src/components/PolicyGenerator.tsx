@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { PolicyData } from '../types';
-import { questions, getDefaultPolicyData } from '../data/questions';
+import { getDefaultPolicyData } from '../data/questions';
 import ReviewForm from './ReviewForm';
 import PolicySelector from './PolicySelector';
 import { 
@@ -10,8 +10,7 @@ import {
   Info, 
   ArrowLeft, 
   ArrowRight, 
-  CheckCircle,
-  Loader2
+  CheckCircle
 } from 'lucide-react';
 
 interface PolicyGeneratorProps {
@@ -94,7 +93,6 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
   const [currentStep, setCurrentStep] = useState<Step>('questions');
   const [currentFormStep, setCurrentFormStep] = useState(0);
   const [formData, setFormData] = useState<Partial<PolicyData>>(getDefaultPolicyData());
-  const [isGenerating, setIsGenerating] = useState(false);
 
   const steps = [
     { id: 'business', title: 'Business Information', icon: Building2 },
@@ -479,17 +477,9 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
             
             <button
               onClick={handleCompleteQuestions}
-              disabled={isGenerating}
               className="tool-button primary w-full flex items-center justify-center gap-2"
             >
-              {isGenerating ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Generating Policies...
-                </>
-              ) : (
-                'Generate Store Policies'
-              )}
+              Generate Store Policies
             </button>
           </div>
         );
