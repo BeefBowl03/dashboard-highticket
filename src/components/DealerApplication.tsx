@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   User, 
   Mail, 
@@ -78,6 +79,7 @@ const Field = React.memo<{
 });
 
 const DealerApplication: React.FC = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [details, setDetails] = useState<DealerDetails>({
     contactFirstName: '',
@@ -442,7 +444,7 @@ const DealerApplication: React.FC = () => {
         {/* Header */}
         <div className="content-header">
           <button
-            onClick={() => window.history.back()}
+            onClick={() => navigate('/dashboard')}
             className="back-button"
           >
             <ArrowLeft size={20} />
