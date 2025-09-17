@@ -435,6 +435,23 @@
   margin-bottom: 20px;
 }
 
+/* Policy Form Specific Styles */
+.policy-form-card {
+  background: transparent;
+  border: 1px solid #333333;
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: visible;
+  min-height: auto;
+}
+
+.policy-form-content {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
 .tool-meta {
   display: flex;
   justify-content: space-between;
