@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PolicyData } from '../types';
 import { questions } from '../data/questions';
+import EditAnswerModal from './EditAnswerModal';
 
 interface ReviewFormProps {
   formData: Partial<PolicyData>;
   onBack: () => void;
   onComplete: () => void;
-  onEditQuestion: (questionId: number) => void;
+  onEditQuestion: (questionId: number, newValue: string) => void;
 }
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ formData, onBack, onComplete, onEditQuestion }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedQuestionId, setSelectedQuestionId] = useState<number | null>(null);
+
   const groupedQuestions = questions.reduce((acc, question) => {
     if (!acc[question.group]) {
       acc[question.group] = [];
@@ -29,6 +33,20 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ formData, onBack, onComplete, o
     }
     
     return String(value);
+  };
+
+  const handleEditClick = (questionId: number) => {
+    setSelectedQuestionId(questionId);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedQuestionId(null);
+  };
+
+  const handleSaveAnswer = (questionId: number, newValue: string) => {
+    onEditQuestion(questionId, newValue);
   };
 
   return (
@@ -62,7 +80,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ formData, onBack, onComplete, o
                       <div className="text-sm sm:text-base text-text-primary">
                         <span className="font-semibold text-base sm:text-lg text-primary-500">Edit your Answer: </span>
                         <button
-                          onClick={() => onEditQuestion(question.id)}
+                          onClick={() => handleEditClick(question.id)}
                           className={`${
                             formData[question.field] ? 'text-success-dark hover:text-success-dark' : 'text-error-dark hover:text-error-dark'
                           } underline cursor-pointer hover:bg-background-accent hover:border hover:border-primary-500 px-2 sm:px-3 py-2 rounded-lg transition-all duration-200 text-base sm:text-lg font-medium transform hover:scale-105 hover:shadow-subtle`}
@@ -105,11 +123,23 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ formData, onBack, onComplete, o
         <button
           type="button"
           onClick={onComplete}
-          className="px-8 py-3 text-base font-medium text-black bg-gradient-to-r from-primary-500 to-primary-400 border border-transparent rounded-lg hover:from-primary-600 hover:to-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-background-primary shadow-elevated hover:shadow-premium transition-all duration-200 transform hover:scale-105 w-full sm:w-auto"
+          className="px-6 py-3 text-base font-medium text-black bg-gradient-to-r from-[#aa813c] to-[#d5b356] border border-transparent rounded-lg hover:from-[#c19d44] hover:to-[#aa813c] focus:outline-none focus:ring-2 focus:ring-[#c19d44] focus:ring-offset-2 focus:ring-offset-[#080808] transition-all duration-200 w-full sm:w-auto shadow-lg hover:shadow-xl hover:scale-105"
+          style={{ fontFamily: 'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif' }}
         >
           Continue to Policies →
         </button>
       </div>
+
+      {/* Edit Answer Modal */}
+      {selectedQuestionId && (
+        <EditAnswerModal
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+          questionId={selectedQuestionId}
+          currentValue={formData[questions.find(q => q.id === selectedQuestionId)?.field as keyof PolicyData] || ''}
+          onSave={handleSaveAnswer}
+        />
+      )}
     </div>
   );
 };

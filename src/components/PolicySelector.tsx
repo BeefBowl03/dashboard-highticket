@@ -105,8 +105,8 @@ const PolicySelector: React.FC<PolicySelectorProps> = ({ policyData, onBack }) =
             <div key={template.id} className="premium-card overflow-hidden">
               {/* Policy Header */}
               <div className="bg-gradient-to-r from-primary-600 to-primary-500 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4">
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-black">{template.name}</h3>
-                <p className="text-black/80 mt-1 font-medium text-xs sm:text-sm md:text-base">{template.description}</p>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white">{template.name}</h3>
+                <p className="text-white/90 mt-1 font-medium text-xs sm:text-sm md:text-base">{template.description}</p>
               </div>
               
               {/* Policy Content */}

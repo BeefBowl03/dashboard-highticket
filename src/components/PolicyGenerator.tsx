@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { PolicyData } from '../types';
-import { getDefaultPolicyData } from '../data/questions';
+
+import { getDefaultPolicyData, questions } from '../data/questions';
 import ReviewForm from './ReviewForm';
 import PolicySelector from './PolicySelector';
+
 import { 
   Building2, 
   Truck, 
@@ -19,6 +21,7 @@ interface PolicyGeneratorProps {
 
 type Step = 'questions' | 'review' | 'policies';
 
+
 // Field component for consistent form inputs
 const Field = React.memo<{
   label: string;
@@ -30,12 +33,83 @@ const Field = React.memo<{
   type?: string;
   rows?: number;
   options?: string[];
-}>(({ label, placeholder, value, onChange, icon, required = false, type = 'text', rows = 1, options = [] }) => {
+  showError?: boolean;
+}>(({ label, placeholder, value, onChange, icon, required = false, type = 'text', rows = 1, options = [], showError = false }) => {
   const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     onChange(e.target.value);
   }, [onChange]);
 
+  // Validation functions
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateDomain = (domain: string): boolean => {
+    const clean = domain
+      .trim()
+      .replace(/^https?:\/\//i, '')
+      .replace(/^www\./i, '')
+      .replace(/\/.*$/, '');
+
+    // Require at least one dot and a TLD (2+ chars)
+    const domainRegex = /^(?:[a-zA-Z0-9-]+\.)+[A-Za-z]{2,}$/;
+    return domainRegex.test(clean);
+  };
+
+  const validateUrl = (url: string): boolean => {
+    try {
+      let normalizedUrl = url.trim();
+      if (!normalizedUrl.match(/^https?:\/\//i)) {
+        normalizedUrl = 'https://' + normalizedUrl;
+      }
+      const urlObj = new URL(normalizedUrl);
+      return (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') && 
+             urlObj.hostname.length > 0;
+    } catch {
+      return false;
+    }
+  };
+
+  const getValidationError = (): string | null => {
+    if (!showError) return null;
+    
+    if (!value || value === '') {
+      if (required) {
+        return `${label} is required`;
+      }
+      return null;
+    }
+    
+    switch (type) {
+      case 'email':
+        if (!validateEmail(value)) {
+          return 'Please enter a valid email address (e.g., user@domain.com)';
+        }
+        break;
+      case 'domain':
+        if (!validateDomain(value)) {
+          return 'Please enter a valid domain with extension (e.g., example.com)';
+        }
+        break;
+      case 'url':
+        if (!validateUrl(value)) {
+          return 'Please enter a valid URL (e.g., example.com, https://example.com)';
+        }
+        break;
+    }
+    return null;
+  };
+
+  const validationError = getValidationError();
+  const hasError = validationError !== null;
+
   const renderInput = () => {
+    const baseClasses = `w-full px-4 py-3 bg-transparent border rounded-lg text-white placeholder-[#888] focus:outline-none focus:ring-2 focus:border-transparent transition-all ${
+      hasError 
+        ? 'border-red-500 focus:ring-red-500' 
+        : 'border-[#333333] focus:ring-[#c19d44]'
+    }`;
     switch (type) {
       case 'textarea':
         return (
@@ -45,7 +119,7 @@ const Field = React.memo<{
             onChange={handleChange}
             rows={rows}
             autoComplete="on"
-            className="w-full px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white placeholder-[#888] focus:outline-none focus:ring-2 focus:ring-[#c19d44] focus:border-transparent"
+            className={baseClasses}
           />
         );
       case 'select':
@@ -53,7 +127,7 @@ const Field = React.memo<{
           <select
             value={value}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#c19d44] focus:border-transparent"
+            className={baseClasses}
           >
             <option value="" className="bg-[#1a1a1a] text-white">Select an option...</option>
             {options.map((option, index) => (
@@ -71,7 +145,7 @@ const Field = React.memo<{
             value={value}
             onChange={handleChange}
             autoComplete="on"
-            className="w-full px-4 py-3 bg-transparent border border-[#333333] rounded-lg text-white placeholder-[#888] focus:outline-none focus:ring-2 focus:ring-[#c19d44] focus:border-transparent"
+            className={baseClasses}
           />
         );
     }
@@ -85,6 +159,11 @@ const Field = React.memo<{
         {required && <span className="text-[#c19d44]">*</span>}
       </label>
       {renderInput()}
+      {validationError && (
+        <div className="text-sm text-red-400 mt-1">
+          {validationError}
+        </div>
+      )}
     </div>
   );
 });
@@ -93,13 +172,14 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
   const [currentStep, setCurrentStep] = useState<Step>('questions');
   const [currentFormStep, setCurrentFormStep] = useState(0);
   const [formData, setFormData] = useState<Partial<PolicyData>>(getDefaultPolicyData());
+  const [showValidation, setShowValidation] = useState(false);
+
 
   const steps = [
     { id: 'business', title: 'Business Information', icon: Building2 },
     { id: 'shipping', title: 'Shipping Information', icon: Truck },
     { id: 'returns', title: 'Returns & Policies', icon: RotateCcw },
-    { id: 'additional', title: 'Additional Information', icon: Info },
-    { id: 'review', title: 'Review & Generate', icon: CheckCircle }
+    { id: 'additional', title: 'Additional Information', icon: Info }
   ];
 
   // Handle special logic and auto-fill URLs
@@ -108,34 +188,126 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
       setFormData(prev => ({ ...prev, sellingRegions: formData.shipToCountries }));
     }
     
-    // Auto-fill URLs when domain is provided
-    if (formData.primaryWebsiteDomain) {
-      // Normalize domain to create proper base URL
-      let cleanDomain = formData.primaryWebsiteDomain.replace(/^https?:\/\//i, '').replace(/\/.*$/, '');
+    // Auto-fill URLs when domain is provided and valid
+    if (!formData.primaryWebsiteDomain) return;
+
+    const cleanDomain = formData.primaryWebsiteDomain
+      .trim()
+      .replace(/^https?:\/\//i, '')
+      .replace(/^www\./i, '')
+      .replace(/\/.*$/, '');
+
+    if (!validateDomain(cleanDomain)) return; // 🚨 don't auto-fill if invalid
+
       const baseUrl = `https://${cleanDomain}`;
       
-      if (!formData.faqPageURL || formData.faqPageURL === '') {
-        setFormData(prev => ({ ...prev, faqPageURL: baseUrl }));
-      }
-      if (!formData.returnPolicyURL || formData.returnPolicyURL === '') {
-        setFormData(prev => ({ ...prev, returnPolicyURL: `${baseUrl}/return-and-refund-policy` }));
-      }
-      if (!formData.termsOfServicePageURL || formData.termsOfServicePageURL === '') {
-        setFormData(prev => ({ ...prev, termsOfServicePageURL: `${baseUrl}/terms-of-service` }));
-      }
-      if (!formData.contactPageURL || formData.contactPageURL === '') {
-        setFormData(prev => ({ ...prev, contactPageURL: `${baseUrl}/contact` }));
-      }
-    }
+    setFormData(prev => ({
+      ...prev,
+      faqPageURL: `${baseUrl}/faq`,
+      returnPolicyURL: `${baseUrl}/return-and-refund-policy`,
+      termsOfServicePageURL: `${baseUrl}/terms-of-service`,
+      contactPageURL: `${baseUrl}/contact`,
+    }));
   }, [formData.shipToCountries, formData.primaryWebsiteDomain, formData.contactPageURL, formData.faqPageURL, formData.returnPolicyURL, formData.sellingRegions, formData.termsOfServicePageURL]);
+
 
   const updateField = useCallback((field: keyof PolicyData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   }, []);
 
+  // Validation functions
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateDomain = (domain: string): boolean => {
+    const clean = domain
+      .trim()
+      .replace(/^https?:\/\//i, '')
+      .replace(/^www\./i, '')
+      .replace(/\/.*$/, '');
+
+    // Require at least one dot and a TLD (2+ chars)
+    const domainRegex = /^(?:[a-zA-Z0-9-]+\.)+[A-Za-z]{2,}$/;
+    return domainRegex.test(clean);
+  };
+
+  const validateUrl = (url: string): boolean => {
+    try {
+      let normalizedUrl = url.trim();
+      if (!normalizedUrl.match(/^https?:\/\//i)) {
+        normalizedUrl = 'https://' + normalizedUrl;
+      }
+      const urlObj = new URL(normalizedUrl);
+      return (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') && 
+             urlObj.hostname.length > 0;
+    } catch {
+      return false;
+    }
+  };
+
+  const isCurrentStepValid = (): boolean => {
+    switch (currentFormStep) {
+      case 0: // Business Information
+        return !!(
+          formData.legalBusinessName?.trim() &&
+          formData.storeWebsiteName?.trim() &&
+          formData.primaryWebsiteDomain?.trim() && validateDomain(formData.primaryWebsiteDomain) &&
+          formData.countryOfIncorporation?.trim() &&
+          formData.fullStreetAddress?.trim() &&
+          formData.mainContactEmail?.trim() && validateEmail(formData.mainContactEmail) &&
+          formData.phoneNumber?.trim() &&
+          formData.customerServiceHours?.trim() &&
+          formData.isoCurrencyCode?.trim()
+        );
+      case 1: // Shipping Information
+        return !!(
+          formData.internationalFlatRateShippingFee?.trim() &&
+          formData.orderProcessingTime?.trim() &&
+          formData.dailyOrderCutoff?.trim() &&
+          formData.domesticDeliveryEstimateStandard?.trim() &&
+          formData.domesticDeliveryEstimateExpedited?.trim() &&
+          formData.internationalDeliveryEstimate?.trim()
+        );
+      case 2: // Returns & Policies
+        return !!(
+          formData.returnWindowDays?.trim() &&
+          formData.shipToCountries?.trim() &&
+          formData.domesticCarriers?.trim() &&
+          formData.internationalCarriers?.trim() &&
+          formData.acceptedPayments?.trim() &&
+          formData.exemptProductCategories?.trim()
+        );
+      case 3: // Additional Information
+        return !!(
+          formData.cookieList?.trim() &&
+          formData.affiliateProgramName?.trim() &&
+          formData.governingLawState?.trim() &&
+          formData.trackOrderURL?.trim() &&
+          formData.faqPageURL?.trim() && validateUrl(formData.faqPageURL) &&
+          formData.returnPolicyURL?.trim() && validateUrl(formData.returnPolicyURL) &&
+          formData.termsOfServicePageURL?.trim() && validateUrl(formData.termsOfServicePageURL) &&
+          formData.contactPageURL?.trim() && validateUrl(formData.contactPageURL)
+        );
+      case 4: // Review & Generate
+        return true; // No validation needed for review step
+      default:
+        return false;
+    }
+  };
+
   const nextStep = () => {
-    if (currentFormStep < steps.length - 1) {
-      setCurrentFormStep(currentFormStep + 1);
+    setShowValidation(true);
+    if (!isCurrentStepValid()) return;
+
+    setShowValidation(false);
+
+    // if we're on the last questions step, go straight to ReviewForm
+    if (currentFormStep === steps.length - 1) {
+      handleCompleteQuestions();              // sets currentStep('review')
+    } else {
+      setCurrentFormStep((s) => s + 1);
     }
   };
 
@@ -146,17 +318,34 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
   };
 
   const handleCompleteQuestions = () => {
+    setShowValidation(true);
+    if (isCurrentStepValid()) {
     setPolicyData(formData as PolicyData);
     setCurrentStep('review');
+    }
   };
 
   const handleReviewComplete = () => {
     setCurrentStep('policies');
+    // Scroll to top of the page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToQuestions = () => {
     setCurrentStep('questions');
   };
+
+  const handleEditQuestion = (questionId: number, newValue: string) => {
+    // Find the question to get the field name
+    const question = questions.find(q => q.id === questionId);
+    if (question) {
+      setFormData(prev => ({
+        ...prev,
+        [question.field]: newValue
+      }));
+    }
+  };
+
 
   const renderStep = () => {
     switch (currentFormStep) {
@@ -170,6 +359,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.legalBusinessName || ''}
               onChange={(v) => updateField('legalBusinessName', v)}
               icon={<Building2 size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Store / Website Name"
@@ -178,14 +368,17 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.storeWebsiteName || ''}
               onChange={(v) => updateField('storeWebsiteName', v)}
               icon={<Building2 size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Primary Website Domain"
               placeholder="e.g., SaunaHavenUSA.com"
               required
+              type="domain"
               value={formData.primaryWebsiteDomain || ''}
               onChange={(v) => updateField('primaryWebsiteDomain', v)}
               icon={<Building2 size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Country of Incorporation"
@@ -194,6 +387,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.countryOfIncorporation || ''}
               onChange={(v) => updateField('countryOfIncorporation', v)}
               icon={<Building2 size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Full Street Address"
@@ -204,6 +398,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.fullStreetAddress || ''}
               onChange={(v) => updateField('fullStreetAddress', v)}
               icon={<Building2 size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Main Contact Email"
@@ -213,6 +408,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.mainContactEmail || ''}
               onChange={(v) => updateField('mainContactEmail', v)}
               icon={<Building2 size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Phone Number"
@@ -221,6 +417,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.phoneNumber || ''}
               onChange={(v) => updateField('phoneNumber', v)}
               icon={<Building2 size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Customer Service Hours"
@@ -229,6 +426,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.customerServiceHours || 'Mon–Fri 9 AM–5 PM EST'}
               onChange={(v) => updateField('customerServiceHours', v)}
               icon={<Building2 size={16} />}
+              showError={showValidation}
             />
             <Field
               label="ISO Currency Code"
@@ -237,6 +435,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.isoCurrencyCode || 'USD'}
               onChange={(v) => updateField('isoCurrencyCode', v)}
               icon={<Building2 size={16} />}
+              showError={showValidation}
             />
           </div>
         );
@@ -250,6 +449,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.domesticFreeShippingThreshold || ''}
               onChange={(v) => updateField('domesticFreeShippingThreshold', v)}
               icon={<Truck size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Domestic Flat Rate Shipping Fee"
@@ -257,6 +457,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.domesticFlatRateShippingFee || ''}
               onChange={(v) => updateField('domesticFlatRateShippingFee', v)}
               icon={<Truck size={16} />}
+              showError={showValidation}
             />
             <Field
               label="International Flat Rate Shipping Fee"
@@ -265,6 +466,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.internationalFlatRateShippingFee || 'Custom (calculated at checkout)'}
               onChange={(v) => updateField('internationalFlatRateShippingFee', v)}
               icon={<Truck size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Order Processing Time"
@@ -273,6 +475,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.orderProcessingTime || '1–2 days'}
               onChange={(v) => updateField('orderProcessingTime', v)}
               icon={<Truck size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Daily Order Cutoff"
@@ -281,6 +484,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.dailyOrderCutoff || '17:00 EST'}
               onChange={(v) => updateField('dailyOrderCutoff', v)}
               icon={<Truck size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Standard Domestic Delivery Estimate"
@@ -289,6 +493,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.domesticDeliveryEstimateStandard || '5–7 business days'}
               onChange={(v) => updateField('domesticDeliveryEstimateStandard', v)}
               icon={<Truck size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Expedited Domestic Delivery Estimate"
@@ -297,6 +502,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.domesticDeliveryEstimateExpedited || '2–3 business days'}
               onChange={(v) => updateField('domesticDeliveryEstimateExpedited', v)}
               icon={<Truck size={16} />}
+              showError={showValidation}
             />
             <Field
               label="International Delivery Estimate"
@@ -305,6 +511,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.internationalDeliveryEstimate || '7–14 business days'}
               onChange={(v) => updateField('internationalDeliveryEstimate', v)}
               icon={<Truck size={16} />}
+              showError={showValidation}
             />
           </div>
         );
@@ -319,6 +526,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.returnWindowDays || '30'}
               onChange={(v) => updateField('returnWindowDays', v)}
               icon={<RotateCcw size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Countries/Regions You Ship To"
@@ -329,6 +537,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.shipToCountries || 'United States (excluding Puerto Rico)'}
               onChange={(v) => updateField('shipToCountries', v)}
               icon={<RotateCcw size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Domestic Carriers"
@@ -339,6 +548,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.domesticCarriers || 'varies by product – contact us to inquire'}
               onChange={(v) => updateField('domesticCarriers', v)}
               icon={<RotateCcw size={16} />}
+              showError={showValidation}
             />
             <Field
               label="International Carriers"
@@ -349,6 +559,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.internationalCarriers || 'varies by product – contact us to inquire'}
               onChange={(v) => updateField('internationalCarriers', v)}
               icon={<RotateCcw size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Accepted Payment Methods"
@@ -359,6 +570,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.acceptedPayments || 'Visa, Mastercard, AmEx, PayPal, etc.'}
               onChange={(v) => updateField('acceptedPayments', v)}
               icon={<RotateCcw size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Selling Regions"
@@ -368,6 +580,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.sellingRegions || ''}
               onChange={(v) => updateField('sellingRegions', v)}
               icon={<RotateCcw size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Non-Returnable Product Categories"
@@ -378,6 +591,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.exemptProductCategories || 'None'}
               onChange={(v) => updateField('exemptProductCategories', v)}
               icon={<RotateCcw size={16} />}
+              showError={showValidation}
             />
           </div>
         );
@@ -394,6 +608,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.cookieList || 'standard essential + analytics'}
               onChange={(v) => updateField('cookieList', v)}
               icon={<Info size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Affiliate Program"
@@ -404,6 +619,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.affiliateProgramName || 'N/A'}
               onChange={(v) => updateField('affiliateProgramName', v)}
               icon={<Info size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Governing Law State"
@@ -412,6 +628,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.governingLawState || ''}
               onChange={(v) => updateField('governingLawState', v)}
               icon={<Info size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Order Tracking"
@@ -420,6 +637,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.trackOrderURL || 'tracking link will be sent via email'}
               onChange={(v) => updateField('trackOrderURL', v)}
               icon={<Info size={16} />}
+              showError={showValidation}
             />
             <Field
               label="FAQ Page URL"
@@ -429,6 +647,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.faqPageURL || ''}
               onChange={(v) => updateField('faqPageURL', v)}
               icon={<Info size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Return Policy URL"
@@ -438,6 +657,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.returnPolicyURL || ''}
               onChange={(v) => updateField('returnPolicyURL', v)}
               icon={<Info size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Terms of Service URL"
@@ -447,6 +667,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.termsOfServicePageURL || ''}
               onChange={(v) => updateField('termsOfServicePageURL', v)}
               icon={<Info size={16} />}
+              showError={showValidation}
             />
             <Field
               label="Contact Page URL"
@@ -456,31 +677,8 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
               value={formData.contactPageURL || ''}
               onChange={(v) => updateField('contactPageURL', v)}
               icon={<Info size={16} />}
+              showError={showValidation}
             />
-          </div>
-        );
-
-      case 4: // Review & Generate
-        return (
-          <div className="space-y-6">
-            <div className="border border-[#333333] rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-[#c19d44] mb-4">Review Your Information</h3>
-              <div className="grid gap-3 text-sm text-[#ffffff80]">
-                <div><strong className="text-white">Business:</strong> {formData.legalBusinessName}</div>
-                <div><strong className="text-white">Store:</strong> {formData.storeWebsiteName}</div>
-                <div><strong className="text-white">Domain:</strong> {formData.primaryWebsiteDomain}</div>
-                <div><strong className="text-white">Email:</strong> {formData.mainContactEmail}</div>
-                <div><strong className="text-white">Phone:</strong> {formData.phoneNumber}</div>
-                <div><strong className="text-white">Country:</strong> {formData.countryOfIncorporation}</div>
-              </div>
-            </div>
-            
-            <button
-              onClick={handleCompleteQuestions}
-              className="tool-button primary w-full flex items-center justify-center gap-2"
-            >
-              Generate Store Policies
-            </button>
           </div>
         );
 
@@ -497,7 +695,7 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
           const Icon = step.icon;
           const isCompleted = index < currentFormStep;
           const isCurrent = index === currentFormStep;
-          
+
           return (
             <div key={step.id} className="flex items-center">
               <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
@@ -515,50 +713,54 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
                 }`} />
           )}
         </div>
+
           );
         })}
       </div>
 
-      {/* Step Content */}
-      <div className="policy-form-card mb-8">
-        <div className="tool-header mb-6">
-          <div className="tool-icon">
-            {React.createElement(steps[currentFormStep].icon, { size: 32 })}
-          </div>
-          <div className="tool-status ready">
-            Step {currentFormStep + 1} of {steps.length}
-          </div>
-              </div>
-        
-        <div className="policy-form-content">
-          <h3 className="tool-title mb-6">{steps[currentFormStep].title}</h3>
-          {renderStep()}
-            </div>
-      </div>
+      {/* Step Content - Only show when on questions step */}
+      {currentStep === 'questions' && (
+        <div className="policy-form-card mb-8">
+          <div className="tool-header mb-6">
+            <div className="tool-icon">
+              {React.createElement(steps[currentFormStep].icon, { size: 32 })}
+                </div>
 
-      {/* Navigation */}
-      <div className="flex justify-between items-center w-full">
-        <button
-          onClick={prevStep}
-          disabled={currentFormStep === 0}
-          className="tool-button secondary nav-button flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <ArrowLeft size={20} />
-          Previous
-        </button>
-        
-        {currentFormStep < steps.length - 1 ? (
+            <div className="tool-status ready">
+              Step {currentFormStep + 1} of {steps.length}
+              </div>
+        </div>
+
+
+          <div className="policy-form-content">
+            <h3 className="tool-title mb-6">{steps[currentFormStep].title}</h3>
+            {renderStep()}
+              </div>
+        </div>
+      )}
+
+
+      {/* Navigation - Only show when on questions step */}
+      {currentStep === 'questions' && (
+        <div className="flex justify-between items-center w-full">
+          <button
+            onClick={prevStep}
+            disabled={currentFormStep === 0}
+            className="tool-button secondary nav-button flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ArrowLeft size={20} />
+            Previous
+          </button>
+          
           <button
             onClick={nextStep}
             className="tool-button primary nav-button flex items-center gap-2"
           >
-            Next
+            {currentFormStep === steps.length - 1 ? 'Review' : 'Next'}
             <ArrowRight size={20} />
           </button>
-        ) : (
-          <div></div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Review and Policy Steps */}
       {currentStep === 'review' && (
@@ -566,7 +768,8 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
           formData={formData}
           onBack={handleBackToQuestions}
           onComplete={handleReviewComplete}
-          onEditQuestion={() => {}} // Not used in stacked layout
+
+          onEditQuestion={handleEditQuestion}
         />
       )}
 
@@ -581,3 +784,4 @@ const PolicyGenerator: React.FC<PolicyGeneratorProps> = ({ setPolicyData }) => {
 };
 
 export default PolicyGenerator;
+
