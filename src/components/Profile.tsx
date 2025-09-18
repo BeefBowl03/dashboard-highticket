@@ -45,7 +45,6 @@ const Profile: React.FC = () => {
 
   const handleSave = () => {
     // TODO: Implement profile update with backend
-    console.log('Saving profile:', formData);
     setIsEditing(false);
   };
 

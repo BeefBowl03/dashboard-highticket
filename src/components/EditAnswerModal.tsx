@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { PolicyData } from '../types';
 import { questions } from '../data/questions';
 import { X } from 'lucide-react';
 
